@@ -75,7 +75,7 @@ In this task, you will deploy Azure virtual machines into different availability
 
     | Setting | Value |
     | --- | --- |
-    | Name | **az104-08-rg01-vnet** |
+    | Name | **az104-08-vnet01** |
     | Address range | **10.80.0.0/20** |
     | Subnet name | **subnet0** |
     | Subnet range | **10.80.0.0/24** |
@@ -213,13 +213,15 @@ In this task, you will install Windows Server Web Server role on the two Azure v
 
 1. To verify that the Custom Script extension-based configuration was successful, navigate back on the **az104-08-vm1** blade, in the **Operations** section, click **Run command**, and, in the list of commands, click **RunPowerShellScript**.
 
-1. On the **Run Command Script** blade, type the following and click **Run** to access the web site hosted on **az104-08-vm0**:
+1. On the **Run Command Script** blade, type the following and click **Run** to access the web site hosted on **az104-08-vm1**:
 
    ```powershell
    Invoke-WebRequest -URI http://10.80.0.4 -UseBasicParsing
    ```
 
     >**Note**: The **-UseBasicParsing** parameter is necessary to eliminate dependency on Internet Explorer to complete execution of the cmdlet
+
+    >**Note**: The **-URI** parameter is the **Private IP address** of the VM. Navigate to the **az104-08-vm1** blade, in the **Networking** section, and click **Network settings**
 
     >**Note**: You can also connect to **az104-08-vm0** and run `Invoke-WebRequest -URI http://10.80.0.5 -UseBasicParsing` to access the web site hosted on **az104-08-vm1**.
 
@@ -290,7 +292,7 @@ In this task you will scale compute for Azure virtual machines by changing their
 
     >**Note**: This section of the template defines the same Azure virtual machine size as the one you specified for the first virtual machine via the Azure portal.
 
-1. On the **Edit template** blade, in the section displaying the content of the template, replace line (`"dataDisks": [ ]` line) with the following code :
+1. On the **Edit template** blade, in the section displaying the content of the template, replace line **51** (`"dataDisks": [ ],`) with the following code :
 
    ```json
                     "dataDisks": [
@@ -308,7 +310,7 @@ In this task you will scale compute for Azure virtual machines by changing their
                         "caching": "ReadOnly",
                         "createOption": "Empty"
                       }
-                    ]
+                    ],
    ```
 
     >**Note**: If you are using a tool that pastes the code in line by line intellisense may add extra brackets causing validation errors. You may want to paste the code into notepad first and then paste it into line 49.
@@ -615,7 +617,7 @@ In this task, you will change the size of virtual machine scale set instances, c
 
     >**Note**: The script installs a custom script extension that configures the attached disk.
 
-1. From the Cloud Shell pane, run the following to excecute the script and configure disks of Azure virtual machine scale set:
+1. From the Cloud Shell pane, run the following to execute the script and configure disks of Azure virtual machine scale set:
 
    ```powershell
    ./az104-08-configure_VMSS_disks.ps1

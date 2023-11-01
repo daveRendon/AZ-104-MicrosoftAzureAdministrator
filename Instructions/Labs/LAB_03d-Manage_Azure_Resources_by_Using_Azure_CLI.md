@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Lab 03d: Manage Azure resources by Using Azure CLI'
+    title: 'Lab 03d: Manage Azure resources by Using Azure CLI (optional)'
     module: 'Administer Azure Resources'
 ---
 
@@ -95,7 +95,7 @@ In this task, you will managing configuration of the Azure managed disk by using
 1. To verify that the change took effect, run the following:
 
    ```sh
-   az disk show --resource-group $RGNAME --name $DISKNAME --query diskSizeGb
+   az disk show --resource-group $RGNAME --name $DISKNAME --query diskSizeGB
    ```
 
 1. To change the disk performance SKU to **Premium_LRS**, from the Bash session within Cloud Shell, run the following:

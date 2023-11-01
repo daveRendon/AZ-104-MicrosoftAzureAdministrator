@@ -105,7 +105,7 @@ In this task, you will create a recovery services vault.
 
 1. On the **az104-10-rsv1 - Properties** blade, click the **Update** link under **Backup Configuration** label.
 
-1. On the **Backup Configuration** blade, note that you can set the **Storage replication type** to either **Locally-redundant** or **Geo-redundant**. Leave the default setting of **Geo-redundant** in place and close the blade.
+1. On the **Backup Configuration** blade, review the choices for **Storage replication type**. Leave the default setting of **Geo-redundant** in place and close the blade.
 
     >**Note**: This setting can be configured only if there are no existing backup items.
 
@@ -208,6 +208,8 @@ In this task, you will implement file and folder backup by using Azure Recovery 
 1. In the **Select Vault Credentials** dialog box, browse to the **Downloads** folder, click the vault credentials file you downloaded, and click **Open**.
 
 1. Back on the **Vault Identification** page, click **Next**.
+
+1. Ensure **Save passphrase securely to Azure Key Vault** is not checked. 
 
 1. On the **Encryption Setting** page of the **Register Server Wizard**, click **Generate Passphrase**.
 

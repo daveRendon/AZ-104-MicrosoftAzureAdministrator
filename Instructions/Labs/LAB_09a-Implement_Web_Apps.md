@@ -50,10 +50,10 @@ In this task, you will create an Azure web app.
     | Resource group | the name of a new resource group **az104-09a-rg1** |
     | Web app name | any globally unique name |
     | Publish | **Code** |
-    | Runtime stack | **PHP 8.0** |
+    | Runtime stack | **PHP 8.2** |
     | Operating system | **Linux** |
     | Region | the name of an Azure region where you can provision Azure web apps |
-    | App service plan | accept the default configuration |
+    | Pricing plans | accept the default configuration |
 
 1. Click **Review + create**. On the **Review + create** tab of the **Create Web App** blade, ensure that the validation passed and click **Create**.
 
@@ -65,7 +65,7 @@ In this task, you will create an Azure web app.
 
 In this task, you will create a staging deployment slot.
 
-1. On the blade of the newly deployed web app, click the **URL** link to display the default web page in a new browser tab.
+1. On the blade of the newly deployed web app, click the **Default domain** link to display the default web page in a new browser tab.
 
 1. Close the new browser tab and, back in the Azure portal, in the **Deployment** section of the web app blade, click **Deployment slots**.
 
@@ -94,9 +94,9 @@ In this task, you will configure web app deployment settings.
     
 1. On the **Settings** tab, in the **Source** drop-down list, select **Local Git** and click the **Save** button
 
-1. On the **Deployment Center** blade, copy the **Git Clone Url** entry to Notepad.
+1. On the **Deployment Center** blade, copy the **Git Clone Uri** entry to Notepad.
 
-    >**Note:** You will need the Git Clone Url value in the next task of this lab.
+    >**Note:** You will need the Git Clone Uri value in the next task of this lab.
 
 1. On the **Deployment Center** blade, select the **Local Git/FTPS credentials** tab, in the **User Scope** section, specify the following settings, and click **Save**.
 
@@ -107,7 +107,7 @@ In this task, you will configure web app deployment settings.
 
     >**Note:** Copy these credentials to Notepad. You will need them later.
     
-    >**Note:** These credentials will be passed through the URI. Do not include any special charaters that affect the interpretation of the URI. For example, @, $, or #. An asterick or plus sign (in the middle of the string) would work.
+    >**Note:** These credentials will be passed through the URI. Do not include any special characters that affect the interpretation of the URI. For example, @, $, or #. An asterick or plus sign (in the middle of the string) would work.
     
 ## Task 4: Deploy code to the staging deployment slot
 
@@ -131,23 +131,23 @@ In this task, you will deploy code to the staging deployment slot.
    Set-Location -Path $HOME/php-docs-hello-world/
    ```
 
-1. From the Cloud Shell pane, run the following to add the remote git (make sure to replace the `[deployment_user_name]` and `[git_clone_url]` placeholders with the value of the **Deployment Credentials** user name and **Git Clone Url**, respectively, which you identified in previous task):
+1. From the Cloud Shell pane, run the following to add the remote git (make sure to replace the `[deployment_user_name]` and `[git_clone_uri]` placeholders with the value of the **Deployment Credentials** user name and **Git Clone Uri**, respectively, which you identified in previous task):
 
    ```powershell
-   git remote add [deployment_user_name] [git_clone_url]
+   git remote add [deployment_user_name] [git_clone_uri]
    ```
 
     >**Note**: The value following `git remote add` does not have to match the **Deployment Credentials** user name, but has to be unique
 
-1. From the Cloud Shell pane, run the following to push the sample web app code from the local repository to the Azure web app staging deployment slot (make sure to replace the `[deployment_user_name]` placeholder with the value of the **Deployment Credentials** user name, which you identified in previous task):
+1. From the Cloud Shell pane, run the following to push the sample web app code from the local repository to the Azure web app staging deployment slot (make sure to replace the placeholder values with the value of the **Deployment Credentials** user name and password and the app name, which you identified in previous task):
 
    ```powershell
-    git push https://<deployment-username>:<deployment-password>@<app-name>.scm.azurewebsites.net/<app-name>.git master
+    git push https://<deployment-username>:<deployment-password>@<app-name>-staging.scm.azurewebsites.net/<app-name>.git master
    ```
 
 1. Close the Cloud Shell pane.
 
-1. On the staging slot blade, click **Overview** and then click the **URL** link to display the default web page in a new browser tab.
+1. On the staging slot blade, click **Overview** and then click the **Default domain** link to display the default web page in a new browser tab.
 
 1. Verify that the browser page displays the **Hello World!** message and close the new tab.
 
@@ -161,7 +161,7 @@ In this task, you will swap the staging slot with the production slot
 
 1. On the **Swap** blade, review the default settings and click **Swap**.
 
-1. Click **Overview** on the production slot blade of the web app and then click the **URL** link to display the web site home page in a new browser tab.
+1. Click **Overview** on the production slot blade of the web app and then click the **Default domain** link to display the web site home page in a new browser tab.
 
 1. Verify the default web page has been replaced with the **Hello World!** page.
 
@@ -229,7 +229,7 @@ In this task, you will configure and test autoscaling of Azure web app.
 
 1. Minimize the Cloud Shell pane (but do not close it) and, on the web app blade, in the Settings section, click **Scale out (App Service plan)**.
 
-1. Select **Autoscale Settings**, select the **Run history** tab, and check the **Observed resource instance count**.
+1. Select **Autoscale Settings**, select the **Run history** tab. Under **Show data for last**, select **1 hour** and check the **Observed resource instance count**.
 
 1. Monitor the utilization and the number of instances for a few minutes. 
 
