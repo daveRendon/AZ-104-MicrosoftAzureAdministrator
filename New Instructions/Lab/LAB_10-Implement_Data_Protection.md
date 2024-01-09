@@ -16,7 +16,7 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 ## Lab scenario
 
-Your organization is evaluating Azure Recovery Services for backup and restore of Azure virtual machines. The organization wanst to identify methods of protecting data from accidental or malicious data loss.
+Your organization is evaluating how to backup and restore Azure virtual machines from accidental or malicious data loss. Additionally, the organization wants to explore using Azure Site Recovery for disaster recovery scenarios. 
 
 ## Interactive lab simulation
 
@@ -42,7 +42,7 @@ There is an interactive lab simulation that you might find useful for this topic
 
 In this task, you will use a template to deploy a virtual machine. The virtual machine will be used to test different backup scenarios.
 
-1. If necessary, download the **\\Allfiles\\Labs\\10\\az104-10-vms-edge-template.json** lab file.
+1. Download the **\\Allfiles\\Lab10\\az104-10-vms-edge-template.json** lab file.
 
 1. Sign in to the **Azure portal** - `https://portal.azure.com`.
 
@@ -53,12 +53,12 @@ In this task, you will use a template to deploy a virtual machine. The virtual m
 1. On the edit template page, select **Load file**.
 
 1. Locate and select the **\\Allfiles\\Lab10\\az104-10-vms-edge-template.json** file and select **Open**.
-2. 
-   >**Note:** Take a moment to review the template. How many virtual machines and virtual networks are being deployed? 
+
+   >**Note:** Take a moment to review the template. We are deploying a virtual network and virtual machine so we can demonstrate backup and recovery. 
 
 1. Select **Save**.
  
-   >**Note:** Notice this template has a lot ofparameters the administrator can change. 
+   >**Note:** Notice this template has a lot of parameters the administrator can change. 
 
 1. Use the following information to complete the custom deployment fields, leaving all other fields with their default values:
 
@@ -87,7 +87,7 @@ In this task, you will create a Recovery Services vault. A Recovery Services vau
     | Subscription | the name of your Azure subscription |
     | Resource group | **az104-rg10vault** (if necessary, select Create new) |
     | Vault Name | `az104-vault1` |
-    | Region | **West US** (or a region that you did not use in the previous task to deploy the VMs) |
+    | Region | **East US** |
 
     >**Note**: Make sure that you specify a different region into which you deployed virtual machines in the previous task.
 
@@ -99,15 +99,15 @@ In this task, you will create a Recovery Services vault. A Recovery Services vau
 
 1. When the deployment is completed, click **Go to Resource**.
 
-1. On the **az104-vault1** Recovery Services vault blade, in the **Settings** section, click **Properties**.
+1. On the Recovery Services vault blade, in the **Settings** section, click **Properties**.
 
-1. On the **az104-vault1 - Properties** blade, click the **Update** link under **Backup Configuration** label.
+1. Select the **Update** link under **Backup Configuration** label.
 
 1. On the **Backup Configuration** blade, review the choices for **Storage replication type**. Leave the default setting of **Geo-redundant** in place and close the blade.
 
     >**Note**: This setting can be configured only if there are no existing backup items.
 
-1. Back on the **az104-vault1 - Properties** blade, click the **Update** link under **Security Settings** label.
+1. Retiurn to the Recovery Services vault blade, click the **Update** link under **Security Settings** label.
 
 1. On the **Security Settings** blade, note that **Soft Delete (For workload running in Azure)** is **Enabled**.
 
@@ -119,7 +119,7 @@ In this task, you will implement Azure virtual-machine level backup. As part of 
 
    >**Note**: Before you start this task, make sure that the deployment you initiated in the first task of this lab has successfully completed.
 
-1. On the **az104-vault1** Recovery Services vault blade, click **Overview**, then click **+ Backup**.
+1. On the Recovery Services vault blade, click **Overview**, then click **+ Backup**.
 
 1. On the **Backup Goal** blade, specify the following settings:
 
@@ -150,9 +150,9 @@ In this task, you will implement Azure virtual-machine level backup. As part of 
 
     >**Note**: Wait for the backup to be enabled. This should take approximately 2 minutes.
 
-1. Navigate back to the **az104-vault1** Recovery Services vault blade, in the **Protected items** section, click **Backup items**, and then click the **Azure virtual machine** entry.
+1. Navigate back to the Recovery Services vault blade, in the **Protected items** section, click **Backup items**, and then click the **Azure virtual machine** entry.
 
-1. On the **Backup Items (Azure Virtual Machine)** blade select the **View details** link for **az104-10-vm0**, and review the values of the **Backup Pre-Check** and **Last Backup Status** entries.
+1. Select the **View details** link for **az104-10-vm0**, and review the values of the **Backup Pre-Check** and **Last Backup Status** entries.
 
 1. On the **az104-10-vm0** Backup Item blade, click **Backup now**, accept the default value in the **Retain Backup Till** drop-down list, and click **OK**.
 
@@ -179,13 +179,11 @@ In this task, you will deploy an Azure storage account. Then you will configure 
 
     >**Note**: Wait for the deployment to complete. It should take about a minute.
 
-1. Navigate to the **az104-vault1** Recovery Services vault.
+1. Navigate to the Recovery Services vault.
 
-1. On the **az104-vault1** page, select **Diagnostic Settings**.
+1. Select **Diagnostic Settings** and then select **Add diagnostic setting**.
 
-1. On the Diagnostic Settings page, select **Add diagnostic setting**.
-
-1. On the Diagnotic settings page, name the setting `Logs and Metrics to storage`.
+1. Name the setting `Logs and Metrics to storage`.
 
 1. Place a checkmark next to the following log and metric catagories:
 
@@ -202,16 +200,13 @@ In this task, you will deploy an Azure storage account. Then you will configure 
 
 1. Select **Save**.
 
-1. Return to the **az104-vault1** resource page. 
-
-1. On **az104-vault1**, select **Backup jobs**.
+1. Return to the Recovery Services vault page and select **Backup jobs**.
 
 1. Locate the backup operation for the **az104-10-vm0** VM, and select **Details**
 
     >**Note**: Depending on your screen resolution, you might need to scroll right in the backup job table.
 
-1. Review the details of the backup job that you triggered on the VM. What are the two subtasks of the backup job?
-
+1. Review the details of the backup job that you triggered on the VM. 
 
 ## Task 5: Implement Azure Site Recovery
 
@@ -271,9 +266,7 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 If you are working with your own subscription take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
 
 + In the Azure portal, select the resource group, select **Delete the resource group**, **Enter resource group name**, and then click **Delete**.
-
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
-
 + Using the CLI, `az group delete --name resourceGroupName`.
 
 

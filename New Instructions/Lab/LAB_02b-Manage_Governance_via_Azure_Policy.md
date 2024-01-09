@@ -44,11 +44,11 @@ There are several interactive lab simulations that you might find useful for thi
 
 ## Task 1: Assign tags via the Azure portal
 
-In this task, you will create and assign a tag to an Azure resource group via the Azure portal. Tags are a critical component of a governance strategy as outlined by the Microsoft Well-Architected Framework and Cloud Adoption Framework. Tags can allow you to quickly identify resource owners, sunset dates, group contacts, and other name/value pairs that your organization  deems important. For this exercise, you will assign a tag identifying the resource role ('Infra' for 'Infrastructure').
+In this task, you will create and assign a tag to an Azure resource group via the Azure portal. Tags are a critical component of a governance strategy as outlined by the Microsoft Well-Architected Framework and Cloud Adoption Framework. Tags can allow you to quickly identify resource owners, sunset dates, group contacts, and other name/value pairs that your organization  deems important. For this task, you assign a tag identifying the resource role ('Infra' for 'Infrastructure').
 
 1. Sign in to the **Azure portal** - `https://portal.azure.com`.
       
-1. Search for and select **Resource groups**.
+1. Search for and select `Resource groups`.
 
 1. From the Resource groups, select **+ Create**.
 
@@ -60,7 +60,7 @@ In this task, you will create and assign a tag to an Azure resource group via th
 
 1. On the resource group blade, click **Tags** in the left menu and create a new tag.
 
-1. Create a tag with the following settings and apply your change:
+1. Create a tag with the following settings.
 
     | Setting | Value |
     | --- | --- |
@@ -75,9 +75,9 @@ In this task, you will create and assign a tag to an Azure resource group via th
 
 In this task, you will assign the built-in *Require a tag and its value on resources* policy to the resource group and evaluate the outcome. Azure Policy can be used to enforce configuration, and in this case, governance, to your Azure resources. 
 
-1. In the Azure portal, search for and select **Policy**. 
+1. In the Azure portal, search for and select `Policy`. 
 
-1. In the **Authoring** section, click **Definitions**. Take a moment to browse through the list of built-in policy definitions that are available for you to use. It might also help to search for `Require a tag`.
+1. In the **Authoring** section, click **Definitions**. Take a moment to browse through the list of [built-in policy definitions](https://learn.microsoft.com/azure/governance/policy/samples/built-in-policies) that are available for you to use. Notice you can also search for a definition.
 
     ![Screenshot of the policy definition.](../media/az104-lab02b-policytags.png)
 
@@ -85,14 +85,14 @@ In this task, you will assign the built-in *Require a tag and its value on resou
 
 1. On the **Require a tag and its value on resources** built-in policy definition blade, click **Assign**.
 
-1. Specify the **Scope** by clicking the ellipsis button and selecting the following values:
+1. Specify the **Scope** by clicking the ellipsis button and selecting the following values. Click **Select** when you are done. 
 
     | Setting | Value |
     | --- | --- |
     | Subscription | *your subscription* |
-    | Resource Group | **az-rg2b** |
+    | Resource Group | **az-rg2** |
 
-    >**Note**: A scope determines the resources or resource groups where the policy assignment takes effect. You could assign policies on the management group, subscription, or resource group level. You also have the option of specifying exclusions, such as individual subscriptions, resource groups, or resources (depending on the assignment scope).
+    >**Note**: A scope determines the resources or resource groups where the policy assignment takes effect. You can assign policies on the management group, subscription, or resource group level. You also have the option of specifying exclusions, such as individual subscriptions, resource groups, or resources.
 
 1. Configure the **Basics** properties of the assignment by specifying the following settings (leave others with their defaults):
 
@@ -102,7 +102,7 @@ In this task, you will assign the built-in *Require a tag and its value on resou
     | Description | `Require Cost Center tag with default value for all resources in the resource group`|
     | Policy enforcement | Enabled |
 
-    >**Note**: The **Assignment name** is automatically populated with the policy name you selected, but you can change it. The **Description** is optional. **Assigned by** is automatically populated based on the user name creating the assignment. 
+    >**Note**: The **Assignment name** is automatically populated with the policy name you selected, but you can change it. The **Description** is optional. 
 
 1. Click **Next** twice and set **Parameters** to the following values:
 
@@ -113,23 +113,19 @@ In this task, you will assign the built-in *Require a tag and its value on resou
 
 1. Click **Next** and review the **Remediation** tab. Leave the **Create a Managed Identity** checkbox unchecked. 
 
-    >**Note**: This setting can be used when the policy or initiative includes the **deployIfNotExists** or **Modify** effect.
-
 1. Click **Review + Create** and then click **Create**.
 
-    >**Note**: Now you will verify that the new policy assignment is in effect by attempting to create another Azure Storage account in the resource group without explicitly adding the required tag. 
+    >**Note**: Now you will verify that the new policy assignment is in effect by attempting to create an Azure Storage account in the resource group. You will create the storage account without adding the required tag. 
     
-    >**Note**: It might take between 5 and 15 minutes for the policy to take effect.
+    >**Note**: It might take between 5 and 10 minutes for the policy to take effect.
 
-1. Navigate back to the blade of the resource group that you created in the previous task, and select the **Tags** blade.
-
-1. On the resource group blade, click **+ Create** and then search for **Storage Account**, and click **+ Create**. 
+1. In the portal, search for and select `Storage Account`, and select **+ Create**. 
 
 1. On the **Basics** tab of the **Create storage account** blade, verify that you are using the resource group that the policy was applied to and specify the following settings (leave others with their defaults), click **Review** and then click **Create**:
 
     | Setting | Value |
     | --- | --- |
-    | Resource group | **az104-rg2b** |
+    | Resource group | **az104-rg2** |
     | Storage account name | *any globally unique combination of between 3 and 24 lower case letters and digits, starting with a letter* |
 
     >**Note**: You may receive a **Validation failed. Click here for details** error. If so, click the error message to identify the reason for the failure and skip the next step. 
@@ -146,7 +142,7 @@ In this task, you will assign the built-in *Require a tag and its value on resou
 
 In this task, we will use a new policy definition to remediate any non-compliant resources. This will use a remediation task as part of the policy to modify existing resources to be compliant with the policy. In this scenario, we will make any child resources of a resource group inherit the **Role** tag that was defined on the resource group.
 
-1. In the Azure portal, search for and select **Policy**. 
+1. In the Azure portal, search for and select `Policy`. 
 
 1. In the **Authoring** section, click **Assignments**. 
 
@@ -156,19 +152,17 @@ In this task, we will use a new policy definition to remediate any non-compliant
 
     | Setting | Value |
     | --- | --- |
-    | Subscription | the name of the Azure subscription you are using in this lab |
-    | Resource Group | the name of the resource group containing the Cloud Shell account you identified in the first task |
-
-    ![Screenshot of the policy scope page. ](../media/az104-lab02b-policyscope2.png) 
+    | Subscription | your Azure subscription |
+    | Resource Group | `az104-rg2` |
 
 1. To specify the **Policy definition**, click the ellipsis button and then search for and select `Inherit a tag from the resource group if missing`.
 
-1. Configure the remaining **Basics** properties of the assignment by specifying the following settings (leave others with their defaults):
+1. Select **Add** and then configure the remaining **Basics** properties of the assignment.
 
     | Setting | Value |
     | --- | --- |
-    | Assignment name | **Inherit the Role tag and its Infra value from the resource group if missing**|
-    | Description | **Inherit the Role tag and its Infra value from the resource group if missing**|
+    | Assignment name | `Inherit the Role tag and its Infra value from the resource group if missing` |
+    | Description | `Inherit the Role tag and its Infra value from the resource group if missing` |
     | Policy enforcement | Enabled |
 
 1. Click **Next** twice and set **Parameters** to the following values:
@@ -184,7 +178,7 @@ In this task, we will use a new policy definition to remediate any non-compliant
     | Create a remediation task | enabled |
     | Policy to remediate | **Inherit a tag from the resource group if missing** |
 
-    >**Note**: This policy definition includes the **Modify** effect.
+    >**Note**: This policy definition includes the **Modify** effect. So, a managed identity is required. 
 
     ![Screenshot of the policy remediation page. ](../media/az104-lab02b-policyremediation.png) 
 
@@ -194,9 +188,7 @@ In this task, we will use a new policy definition to remediate any non-compliant
     
     >**Note**: It might take between 5 and 15 minutes for the policy to take effect.
 
-1. Navigate back to the blade of the resource group that you created in the first task.
-
-1. On the resource group blade, click **+ Create** and then search for **Storage Account**, and click **+ Create**. 
+1. Search for and select `Storage Account`, and click **+ Create**. 
 
 1. On the **Basics** tab of the **Create storage account** blade, verify that you are using the Resource Group that the Policy was applied to and specify the following settings (leave others with their defaults) and click **Review**:
 
@@ -206,7 +198,9 @@ In this task, we will use a new policy definition to remediate any non-compliant
 
 1. Verify that this time the validation passed and click **Create**.
 
-1. Once the new storage account is provisioned, click **Go to resource** button. On the **Overview** blade, note that the tag **Role** with the value **Infra** has been automatically assigned to the resource.
+1. Once the new storage account is provisioned, click **Go to resource**.
+
+1. On the **Tags** blade, note that the tag **Role** with the value **Infra** has been automatically assigned to the resource.
 
 ## Key takeaways
 
@@ -221,7 +215,5 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 If you are working with your own subscription take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
 
 + In the Azure portal, select the resource group, select **Delete the resource group**, **Enter resource group name**, and then click **Delete**.
-
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
-
 + Using the CLI, `az group delete --name resourceGroupName`.

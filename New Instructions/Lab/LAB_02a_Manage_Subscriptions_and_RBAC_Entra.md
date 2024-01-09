@@ -6,7 +6,7 @@ lab:
 
 # Lab 02a - Manage Subscriptions and RBAC
 
-## Lab Introduction
+## Lab introduction
 
 In this lab, you learn about role-based access control. You learn how to use permissions and scopes to control what actions identities can and cannot perform. You also learn how to make subscription management easier using management groups. 
 
@@ -25,7 +25,7 @@ To simplify management of Azure resources in your organization, you have been ta
     - Creating support request tickets
     - Viewing resource groups
 
-## Interactive lab scenario
+## Interactive lab scenarios
 
 There are some interactive lab simulations that you might find useful for this topic. The simulation lets you to click through a similar scenario at your own pace. There are differences between the interactive simulation and this lab, but many of the core concepts are the same. An Azure subscription is not required. 
 
@@ -43,8 +43,9 @@ There are some interactive lab simulations that you might find useful for this t
 
 + Task 1: Implement management groups.
 + Task 2: Review and assign a built-in Azure role.
-+ Task 3: Create and assign a custom RBAC roles. 
-+ Task 4: Monitor role assignments with the Activity Log.
++ Task 3: Create a custom RBAC role for the Help Desk personnel.
++ Task 4: Test the custom role to ensure it has the correct permissions
++ Task 5: Monitor role assignments with the Activity Log.
 
 ## Task 1: Implement Management Groups
 
@@ -52,7 +53,7 @@ In this task, you will create and configure management groups. Management groups
 
 1. Sign in to the **Azure portal** - `https://portal.azure.com`.
 
-1. Search for and select **Management groups** to navigate to the **Management groups** blade.
+1. Search for and select `Management groups`.
 
 1. Review the messages at the top of the **Management groups** blade. If you are seeing the message stating **You are registered as a directory admin but do not have the necessary permissions to access the root management group**, perform the following sequence of steps:
 
@@ -73,120 +74,122 @@ In this task, you will create and configure management groups. Management groups
     | Management group ID | `az104-mg1` |
     | Management group display name | `az104-mg1` |
 
-1. In this scenario, all subscriptions would now be added to the management group. RBAC would then be applied to management group and scoped to the Help Desk. 
+1. In this scenario, all subscriptions would now be added to the management group. RBAC would then be applied to the management group.
+
+1. **Refresh** the management group page until your new management group displays. 
+
+   >**Note:** Did you notice the root management group? All management groups and subscriptions are part of the root management group.
 
 ## Task 2: Review and assign a built-in Azure role
 
-In this task, you will assign the VM Contributor role to your user account.  
+In this task, you will review the built-in roles and assign the VM Contributor role to your user account. Azure provides a large number of [built-in roles](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles).
 
-1. In the portal, search for and the **az104-mg1** management group.
+1. Select the **az104-mg1** management group.
 
 1. Select the **Access control (IAM)** blade, and then the **Roles** tab.
 
-1. Scroll through the role definitions that are available. **View** a role to get detailed information about the **Permissions**, **JSON**, and **Assignments**.
+   >**Note:** Notice the other choices for **Check access**, **Role assignment**, and **Deny assignments**. 
+
+1. Scroll through the built-in role definitions that are available. **View** a role to get detailed information about the **Permissions**, **JSON**, and **Assignments**. 
 
 1. Select **+ Add**, from the drop-down menu, select **Add role assignment**. 
 
-1. On the **Add role assignment** blade, specify the following settings and click **Next** after each step:
+1. On the **Add role assignment** blade, search for and select the **Virtual Machine Contributor**. The Virtual machine contributor role lets you manage virtual machines, but not access their operating system or manage the virtual network and storage account they are connected to. Select **Next**. 
 
-    | Setting | Value |
-    | --- | --- |
-    | Role in the search tab | **Virtual Machine Contributor** |
-    | Assign access to (Under Members pane) | **User, group, or service principal** |
-    | Select (+Select Members) | *your user account* (shown in upper right corner of the portal) |
+1. On the **Members** tab, **Select Members**.
 
-4. Click **Review + assign** twice to create the role assignment.
+1. Search for and select *your user account. User account information is shown in the upper right corner of the portal. Click **Select**. 
 
-    >**Note:** The Virtual machine contributor role lets you manage virtual machines, but not access their operating system or manage the virtual network and storage account they are connected to.
+1. Click **Review + assign** twice to create the role assignment.
 
-    >**Note:** This assignment might not actually grant you any additional provileges. If you already have the Owner role, this role includes all privileges associated with the Contributor role.
+1. Return to your management group. Select **Access control (IAM)**. On the **Role assignments** tab, confirm you have the **Virtual Machine Contributor** role. 
+
+    >**Note:** This assignment might not actually grant you any additional provileges. If you already have the Owner role, this role includes all privileges associated with the VM Contributor role.
+    >
+    >**Note:** This task demonstrates how to assign a built-in role.  As a best practice always assign roles to groups not individuals. 
 
 
-## Task 3: Create custom RBAC roles
+## Task 3: Create a custom RBAC role for the Help Desk personnel
 
 In this task, you will create a custom RBAC role. Custom roles are a core part of implementing the principle of least privilege for an environment. Built-in roles might have too many permissions for your organization. In this task we will create a new role and remove permissions that are not be necessary.
 
-### Create the custom RBAC role for the Help Desk users
+1. Continue working on your management group. In the **Access control (IAM)** blade, select the **Check access** tab.
 
-1. In the portal, search for and select the **az104-mg1** management group.
+1. In the **Create a custom role** box, select **Add**.
 
-1. Select the **Access control (IAM)** blade, and then the **Roles** tab.
+1. On the Basics tab of **Create a custom role**, provide the name `Custom Support Request`. In the Description field, enter `A custom contributor role for support requests.` 
 
-1. Select the **Check access** tab, then in the **Create a custom role** box, select **Add**.
-
-1. On the Basics tab of Create a custom role, provide the name `Custom Support Request`. In the Description field, enter `A custom contributor role for support requests.`
-
-1. In the Baseline permissions field, select **Clone a role**. In the Role to clone drop-down menu, select **Support Request Contributor**.
+1. For **Baseline permissions**, select **Clone a role**. In the **Role to clone** drop-down menu, select **Support Request Contributor**.
 
     ![Screenshot clone a role.](../media/az104-lab02a-clone-role.png)
 
-1. Select the **Permissions** tab, and then select **+ Exclude permissions**.
+1. Select **Next** to move to the **Permissions** tab, and then select **+ Exclude permissions**.
 
 1. In the resource provider search field, enter `.Support` and select **Microsoft.Support**.
 
 1. In the list of permissions, place a checkbox next to **Other: Registers Support Resource Provider** and then select **Add**. The role should be updated to include this permission as a *NotAction*.
 
-1. Select the **Assignable scopes** tab. Select the **Delete** icon on the row for the subscription.
+    >**Note:** An Azure resource provider is a set of REST operations that enable functionality for a specific Azure service. We do not want the Help Desk to be able to have this capability, so it is being removed from the cloned role. 
 
-1. Select **+ Add assignable scopes**. Select the **az104-mg1** management group, then click **Select**.
+1. Select **+ Add assignable scopes**. Select the **az104-mg1** management group, then click **Next**.
 
-1. Select the **JSON** tab. Review the JSON for the *Actions*, *NotActions*, and *AssignableScopes* that are customized in the role. 
+1. Review the JSON for the *Actions*, *NotActions*, and *AssignableScopes* that are customized in the role. 
 
-1. Selct **Review + Create**, and then select **Create**.
+1. Select **Review + Create**, and then select **Create**.
 
-    >**Note:** At this point, you have created a custom role. Your next step is to assign the role to a Help Desk user. 
+    >**Note:** At this point, you have created a custom role. Your next step would be to assign the role to a Help Desk. Before we do that, we will test a user. 
 
-### Identity the Help Desk user account you will use for testing the new role and assign the custom role. 
+## Task 4: Assign and test the custom RBAC role.
+
+In this task, you add the custom role to a test user and confirm their permissions. 
 
 1. In the Azure portal, search for and select **Microsoft Entra ID**, then select the **Users** blade.
 
-    >**Note**: This task requires a user account for testing. For this lab we will use, **HelpDesk-user1**. Please take a minute to identify a test user, if necessary **Add** a new user. If you are creating a new user, require the password to be set when they login. 
+    >**Note**: This task requires a user account for testing. For this lab we will use, **helpdesk-user1**. If necessary you can **Add** a new user. If you are creating a new user, require the password to be set when they login. 
 
-1. Before continuing ensure you have the **User principal name** for your test account. You will need this to login to the portal. Use the icon to copy this information to the clipboard. 
+1. Before continuing ensure you have the **User principal name** for your test user account. You will need this to login to the portal. You can copy the UPN to the clipboard. 
 
-1. In the Azure portal, navigate back to the **az104-mg1** management group and display its details.
+1. In the Azure portal, navigate back to the **az104-mg1** management group.
 
 1. Click **Access Control (IAM)**, click **+ Add** and then **Add role assignment**. 
 
 1. On the **Role** tab, search for `Custom Support Request`. 
 
-    >**Note**: if your custom role is not visible, it can take up to 10 minutes for the custom role to appear after creation.
+    >**Note**: if your custom role is not visible, it can take up to 5 minutes for the custom role to appear after creation. **Refresh** the page. 
 
-1. Select the **Role** and click **Next**. On the **Members** tab, click **+ Select members** and **select** user account **HelpDesk-user1**.  
+1. Select the **Role** and click **Next**. On the **Members** tab, click **+ Select members** and **select** user account **helpdesk-user1**.  
 
 1. Select **Review + assign** twice.
 
     >**Note:** At this point, you have a Help Desk user account with custom privileges to create a support ticket. Your next step is to test the account.
     
-### Test the Help Desk user account to ensure it has the correct privileges
+1. Open an **InPrivate** browser window and navigate to the Azure portal at `https://portal.azure.com`.
 
-1. Open an **InPrivate** browser window and sign in to the Azure portal at `https://portal.azure.com` using the test user account. If prompted to update the password, change the password for the user.
+1. Provide the user principle name for helpdesk-user1. When prompted to update the password, change the password for the user.
 
-    >**Note**: Rather than typing the user name, you can paste the content of clipboard.
+1. In the **InPrivate** browser window, in the Azure portal, search and select **Resource groups** to verify that the Help Desk user can view resource groups.
 
-1. In the **InPrivate** browser window, in the Azure portal, search and select **Resource groups** to verify that the Help Desk user can see all resource groups.
-
-1. In the **InPrivate** browser window, in the Azure portal, search and select **All resources** to verify that the Help Desk user cannot see any resources.
+1. In the **InPrivate** browser window, in the Azure portal, search and select **All resources** to verify that the Help Desk user cannot see any individual resources.
 
 1. In the **InPrivate** browser window, in the Azure portal, search and select **Help + support** and then click **+ Create a support request**. 
 
     >**Note**: Many organizations opt to provide all of the cloud administrators access to open support cases. This enables administrators to resolve support cases faster.
 
-1. In the **InPrivate** browser window, on the **Problem Description/Summary** tab of the **Help + support - New support request** blade, type **Service and subscription limits** in the Summary field and select the **Service and subscription limits (quotas)** issue type. Note that the subscription you are using in this lab is listed in the **Subscription** drop-down list.
+1. For **Issue type** select **Service and subscription limits**. Notice your other choices.
 
-    >**Note**: The presence of the subscription you are using in this lab in the **Subscription** drop-down list indicates that the account you are using has the permissions required to create the subscription-specific support request.
+1. in the Summary field and select the **Service and subscription limits (quotas)** issue type. Select **Next**.
 
-    >**Note**: If you do not see the **Service and subscription limits (quotas)** option, sign out from the Azure portal and sign in back.
+    >**Note**: Since the role was assigned to the management group, all subscriptions should be available to the Help Desk. If you do not see the **Service and subscription limits (quotas)** option, sign out from the Azure portal and sign in back.
 
 1. Take a few minutes to explore creating a **New support request**, but do not continue with creating the support request. Instead, sign out as the Help Desk user from the Azure portal and close the InPrivate browser window.
 
-1. You have finished testing your custom role and reviewed how to create a support ticket. 
+    >**Note:** You have now verified a Help Desk user has the correct permissions.
 
-## Task 4: Monitor role assignments with the Activity Log
+## Task 5: Monitor role assignments with the Activity Log
 
 In this task, you view the activity log to determine if anyone has created a new role. 
 
-1. Return to the **az104-mg1** resource and select **Activity log**.
+1. Return to the portal and in the **az104-mg1** resource select **Activity log**.
 
 2. Select **Add filter**, select **Operation**, and then **Create role assignment**.
 
@@ -209,9 +212,7 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 If you are working with your own subscription take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
 
 + In the Azure portal, select the resource group, select **Delete the resource group**, **Enter resource group name**, and then click **Delete**.
-
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
-
 + Using the CLI, `az group delete --name resourceGroupName`.
 
 

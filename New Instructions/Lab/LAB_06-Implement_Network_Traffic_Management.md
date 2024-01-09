@@ -196,7 +196,7 @@ In this task, you will implement an Azure Load Balancer in front of the two Azur
 
 ## Task 3: Implement Azure Application Gateway
 
-In this task, you will implement an Azure Application Gateway in front of the two Azure virtual machines in the spoke virtual networks. An Application Gateway provides layer 7 load balancing, Web Application Firewall (WAF), SSL termination, and end-to-end encryption to the resources defined in the backend pool. 
+In this task, you will implement an Azure Application Gateway in front of the two Azure virtual machines. An Application Gateway provides layer 7 load balancing, Web Application Firewall (WAF), SSL termination, and end-to-end encryption to the resources defined in the backend pool. The Application Gateway will route images to one virtual machine and videos to the other virtual machine. 
 
 ## Architecture diagram - Application Gateway
 
@@ -347,7 +347,5 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 If you are working with your own subscription take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
 
 + In the Azure portal, select the resource group, select **Delete the resource group**, **Enter resource group name**, and then click **Delete**.
-
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
-
 + Using the CLI, `az group delete --name resourceGroupName`.

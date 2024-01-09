@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Lab 04: Implement Virtual Networking'
+    module: 'Implement Virtual Networking'
+---
+
 # Lab 04 - Implement Virtual Networking
 
 ## Lab introduction
@@ -20,6 +26,8 @@ The **ManufacturingVnet** virtual network is deployed in the **West Europe** reg
 
 There are several interactive lab simulations that you might find useful for this topic. The simulation lets you to click through a similar scenario at your own pace. There are differences between the interactive simulation and this lab, but many of the core concepts are the same. An Azure subscription is not required. 
 
++ [Secure network traffic](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%2013). Create a virtual machine, a virtual network, and a network security group. Add network security group rules to allow and disallow traffic.
+  
 + [Create a simple virtual network](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%204). Create a virtual networks with two virtual machines. Demonstrate the virtual machines can communicate. 
 
 + [Design and implement a virtual network in Azure](https://mslabs.cloudguides.com/guides/AZ-700%20Lab%20Simulation%20-%20Design%20and%20implement%20a%20virtual%20network%20in%20Azure). Create a resource group and create virtual networks with subnets.  
@@ -64,9 +72,9 @@ These virtual networks and subnets are structured in a way that accommodates exi
 
 The organization plans a large amount of growth for core services. In this task, you create the virtual network and the associated subnets to accommodate the existing resources and planned growth.
 
-1. Search for and select **Virtual Networks**.
+1. Search for and select `Virtual Networks`.
 
-1. Select **Create** on the Virtual networks page and complete the **Basics** and **IPv4 addresses**. 
+1. Select **Create** on the Virtual networks page and complete the **Basics** and **IP addresses** tabs. 
 
 1. Use the information in the following table to create the CoreServicesVnet virtual network.  
 
@@ -75,10 +83,8 @@ The organization plans a large amount of growth for core services. In this task,
 	| Basics       | Resource Group     | **az104-rg4** |
 	|              | Name               | `CoreServicesVnet`     |
 	|              | Region             | (US) **East US**         |
-	| IP Addresses | IPv4 address space | `10.20.0.0/16` (Delete or overwrite the IP address space)     |
+	| IP Addresses | IPv4 address space | `10.20.0.0/16` (separate the entries)    |
 
-
-1. In the subnets area, delete the **default** subnet.
 
 1. Select **+ Add a subnet**. Complete the name and address information for each subnet. Be sure to select **Add** for each new subnet. 
 
@@ -109,7 +115,9 @@ The organization plans a large amount of growth for core services. In this task,
 
 In this task, you create the ManufacturingVnet virtual network and associated subnets. The organization anticipates growth for the manufacturing offices so the subnets are sized for the expected growth.
 
-1. Edit the local **template.json** file in your **Downloads** folder. If you are using Visual Studio Code be sure you are working in a **trusted window** and not in the **restricted mode**.
+1. Locate the **template.json** file exported in the previous task. It should be in your **Downloads** folder.
+
+1. Edit the file using the editor of your choice. If you are using Visual Studio Code be sure you are working in a **trusted window** and not in the **restricted mode**.
 
    >**Note:** For this task we are demonstrating how to edit and redeploy a template. If it gets too confusing, the finished template is provided. 
 
@@ -135,66 +143,17 @@ In this task, you create the ManufacturingVnet virtual network and associated su
 
 1. Be sure to **Save** your changes.
 
-## Make changes to the parameters.json file
+### Deploy the custom template
 
-1. Edit the local **parameters.json** file and change **CoreServicesVnet** to `ManufacturingVnet`.
+1. In the portal, search for and select **Deploy a custom template**.
 
-1. Make sure everything looks correct and **Save** your changes. 
+1. Select **Build your own template in the editor** and then **Load file**.
 
-	>**Note:** You can now deploy the template with either Azure PowerShell (option 1) or the Bash shell (option 2). Your choice, but only do one type of deployment. 
+1. Select the **templates.json** file with your Manufacturing changes, then select **Save**.
 
-### Deploy the template with Azure Powershell (option 1)
+1. Select **Review + create** and then **Create**.
 
-1. Open the Cloud Shell and select **PowerShell**.
-
-1. If necessary, use the **Advanced** settings to create disk storage for the Cloud Shell. Detailed steps are in Lab 03. 
-
-1. In the Cloud Shell, use the **Upload** icon to upload the template and parameters files. You will need to upload each separately.
-
-1. Verify your files are available in the Cloud Shell storage.
-
-    ```powershell
-    dir
-    ```
-
-1. Deploy the template to the az104-rg4 resource group.
-
-    ```powershell
-    New-AzResourceGroupDeployment -ResourceGroupName az104-rg4 -TemplateFile template.json -TemplateParameterFile parameters.json
-    ```
-1. Ensure the command completes and the ProvisioningState is **Succeeded**.
-
-	>**Note:** If you need to make changes to the files, be sure **rm** (remove) the old file before uploading the new one. 
-	
-
-
-1. Before continuing, return to the portal and ensure the **ManufacturingVnet** virtual network and subnets were created. You may need to **Refresh** the virtual networks page. 
-
-
-### Deploy the template with Bash (option 2)
-
-
-1. Open the Cloud Shell and select **Bash**.
-
-1. If necessary, use the **Advanced** settings to create disk storage for the Cloud Shell.
-
-1. In the Cloud Shell, use the **Upload** icon to upload the template and parameters files. You will need to upload each separately.
-
-1. Verify your files are available in the Cloud Shell storage.
-
-    ```bash
-    ls
-    ```
-
-1. Deploy the template to the az104-rg4 resource group.
-
-    ```bash
-    az deployment group create --resource-group az104-rg4 --template-file template.json --parameters parameters.json
-    ```
-    
-1. Ensure the command completes and the ProvisioningState is **Succeeded**.
-
-1. Return to the portal and ensure the **ManufacturingVnet** and associate subnets were created. You may need to **Refresh** the virtual networks page. 
+1. Wait for the template to deploy, then confirm (in the portal) the Manufacturing virtual network was create. 
    
 ## Task 4: Configure communication between an Application Security Group and a Network Security Group 
 
@@ -211,7 +170,7 @@ In this task, we create an Application Security Group and a Network Security Gro
     | Subscription | *your subscription* |
     | Resource group | **az104-rg4** |
     | Name | `asg-web` |
-    | Region | **(US) East US**  |
+    | Region | **West Europe**  |
 
 1. Click **Review + create** and then after the validation click **Create**.
 
@@ -249,7 +208,7 @@ In this task, we create an Application Security Group and a Network Security Gro
 
 1. Select **+ Add**.
 
-1. On the **Add inbound port rule** blade, use the following information to add inbound port rule, and then select **Add**.
+1. On the **Add inbound security rule** blade, use the following information to add inbound port rule, and then select **Add**.
 
     | Setting | Value |
     | -- | -- |
@@ -264,7 +223,7 @@ In this task, we create an Application Security Group and a Network Security Gro
     | Priority | **100** |
     | Name | **AllowASG** |
 
-1. After creating your NSG rule, take a minute to review the default **Outgoing security rules**.
+1. After creating your NSG rule, take a minute to review the default **Outbound security rules**.
 
 ## Key takeaways
 
@@ -281,7 +240,5 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 If you are working with your own subscription take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
 
 + In the Azure portal, select the resource group, select **Delete the resource group**, **Enter resource group name**, and then click **Delete**.
-
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
-
 + Using the CLI, `az group delete --name resourceGroupName`.
