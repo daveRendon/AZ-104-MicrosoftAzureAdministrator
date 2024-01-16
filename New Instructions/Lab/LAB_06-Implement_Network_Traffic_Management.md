@@ -38,7 +38,7 @@ There are interactive lab simulations that you might find useful for this topic.
 
 In this task, you will use a template to deploy one virtual network, one network security group, and two virtual machines along with associated virtual network interface cards. The VMs will reside in a hub virtual network named **az104-vnet1**.
 
-1. If necessary, download the **\\Allfiles\\Lab06\\az104-06-vms-loop-template.json** lab file. 
+1. Download the **\\Allfiles\\Lab06** lab files (template and parameters). 
 
 1. Sign in to the **Azure portal** - `https://portal.azure.com`.
 
@@ -50,9 +50,11 @@ In this task, you will use a template to deploy one virtual network, one network
 
 1. Locate and select the **\\Allfiles\\Lab06\\az104-06-vms-loop-template.json** file and select **Open**.
 
-   >**Note:** Notice this file includes the Parameters at the top of the file. So, a separate Parameters file is not needed. 
-
 1. Select **Save**.
+
+1. Select **Edit parameters** and load the **\\Allfiles\\Lab06\\az104-06-vms-loop-parameters.json** file.
+
+1. Select **Save**. 
 
 1. Use the following information to complete the fields on the custom deployment page, leaving all other fields with the default value.
 
@@ -60,9 +62,6 @@ In this task, you will use a template to deploy one virtual network, one network
     | ---           | ---           |
     | Subscription  | Your Azure subscription |
     | Resource group| `az104-rg6` (If necessary, select **Create new**)
-    | Region        | **East US**   |
-    | VM Size       | **Standard DS2 v3** |
-    | Admin Username| `localadmin` |
     | Password      | Provide a secure password |
 
      >**Note**: If you receive an error that the VM size is unavailable, select a SKU that is available in your subscription and has at least 2 cores.
@@ -71,8 +70,6 @@ In this task, you will use a template to deploy one virtual network, one network
 
     >**Note**: Wait for the deployment to finish before moving to the next task. The deployment should complete in approximately 5 minutes.
     
-    >**Note:** While you wait, search for and select **Network Watcher**. Select the **Topology** blade to get a view of the virtual network infrastructure. Hover over the networks to view subnet and IP addressing information. 
-
 ## Task 2: Implement Azure Load Balancer
 
 In this task, you will implement an Azure Load Balancer in front of the two Azure virtual machines in the hub virtual network. Load Balancers in Azure provide layer 4 connectivity across resources, such as virtual machines. Load Balancer configuration includes a front-end IP address to accept connections, a backend pool, and rules that define how connections should traverse the load balancer.
@@ -83,7 +80,7 @@ In this task, you will implement an Azure Load Balancer in front of the two Azur
 >**Note**: Notice the Load Balancer is distributing across two virtual machines in the same virtual network. 
 
 
-![Diagram of the lab tasks.](../media/az104-lab06lb-architecture-diagram.png)
+![Diagram of the lab tasks.](../media/az104-lab06-lb-architecture.png)
 
 
 1. In the Azure portal, search for and select `Load balancers` and, on the **Load balancers** blade, click **+ Create**.
@@ -128,7 +125,6 @@ In this task, you will implement an Azure Load Balancer in front of the two Azur
     | Name | `az104-be` |
     | Virtual network | **az104-06-vnet1** |
     | Backend Pool Configuration | **NIC** | 
-    | IP Version | **IPv4** |
     | Click **Add** to add a virtual machine |  |
     | az104-vm0 | **check the box** |
     | az104-vm1 | **check the box** |
@@ -202,7 +198,7 @@ In this task, you will implement an Azure Application Gateway in front of the tw
 
 >**Note**: This Application Gateway is working in the same virtual network as the Load Balancer in the previous tasks. This is not typical in a production environment.
 
-![Diagram of the lab tasks.](../media/az104-lab06gw-architecture-diagram.png)
+![Diagram of the lab tasks.](../media/az104-lab06-gw-architecture.png)
 
 1. In the Azure portal, search and select `Virtual networks`.
 
@@ -294,19 +290,19 @@ In this task, you will implement an Azure Application Gateway in front of the tw
 
     | Setting | Value |
     | --- | --- |
-    | Path | `images/*` |
+    | Path | `/image/*` |
     | Target name | `images` |
-    | Backend settings | **appgw-settings** |
-    | Backend target | `az104-appgw-images` |
+    | Backend settings | **az104-http** |
+    | Backend target | `az104-appgwbe` |
 
 	**Rule - routing to the videos backend**
 
     | Setting | Value |
     | --- | --- |
-    | Path | `video/*` |
+    | Path | `/video/*` |
     | Target name | `videos` |
-    | Backend settings | **appgw-settings** |
-    | Backend target | `az104-appgw-videos` |
+    | Backend settings | **az104-http** |
+    | Backend target | `az104-appgwbe` |
 
 1. Select **Add** twice then select **Next: Tags >**.
 
@@ -316,7 +312,7 @@ In this task, you will implement an Azure Application Gateway in front of the tw
 
 1. In the Azure portal, search and select **az104-appgw**.
 
-1. In the **Application Gateway** select **Backend health**.
+1. In the **Application Gateway** resource, in the **Monitoring** section, select **Backend health**.
 
 1. Ensure both servers in the backend pool display **Healthy**. 
 
@@ -339,9 +335,15 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + Azure Load Balancer is an excellent choice for distributing network traffic across multiple virtual machines at the transport layer (OSI layer 4 - TCP and UDP).
 + Public Load Balancers are used to load balance internet traffic to your VMs. An internal (or private) load balancer is used where private IPs are needed at the frontend only.
 + The Basic load balancer is for small-scale applications that don't need high availability or redundancy. The Standard load balancer is for high performance and ultra-low latency.
-+ Azure Application Gateway is a web traffic (OSI layer 7) load balancer that enables you to manage traffic to your web applications. 
++ Azure Application Gateway is a web traffic (OSI layer 7) load balancer that enables you to manage traffic to your web applications.
++ The Application Gateway Standard tier offers all of the L7 functionality, including load balancing, The WAF tier adds a firewall to check for malicious traffic.
 + An Application Gateway can make routing decisions based on additional attributes of an HTTP request, for example URI path or host headers. 
 
+## Learn more with self-paced training
+
++ [Improve application scalability and resiliency by using Azure Load Balancer](https://learn.microsoft.com/training/modules/improve-app-scalability-resiliency-with-load-balancer/). Discuss the different load balancers in Azure and how to choose the right Azure load balancer solution to meet your requirements.
++ [Load balance your web service traffic with Application Gateway](https://learn.microsoft.com/training/modules/load-balance-web-traffic-with-application-gateway/). Improve application resilience by distributing load across multiple servers and use path-based routing to direct web traffic.
++ [Configure monitoring for virtual networks](https://learn.microsoft.com/training/modules/configure-monitoring-virtual-networks/). Understand how to use Azure Network Watcher Connection Monitor, flow logs, NSG diagnostics, and packet capture to monitor connectivity across your Azure IaaS network resources.
 ## Cleanup your resources
 
 If you are working with your own subscription take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 

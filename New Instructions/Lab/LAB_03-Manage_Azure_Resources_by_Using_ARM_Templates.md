@@ -28,7 +28,7 @@ Your team has explored the basic Azure administrative capabilities such as provi
 
 ## Architecture diagram
 
-![Diagram of the tasks.](../media/az104-lab03b-architecture-diagram.png)
+![Diagram of the tasks.](../media/az104-lab03-architecture.png)
 
 ## Tasks
 
@@ -61,9 +61,10 @@ In this task, you use the Azure portal to generate an Azure Resource Manager tem
     | Region | **East US** |
     | Availability zone | **No infrastructure redundancy required** | 
     | Source type | **None** |
-    | Performance | **Standard HDD** |
+    | Performance | **Standard HDD** (change size) |
     | Size | **32 Gib** | 
 
+>**Note:** We are creating a simple managed disk so you can practice with templates. Azure managed disks are block-level storage volumes that are managed by Azure and used with Azure virtual machines.
 
 1. Click **Review + Create** *once*. Do **not** deploy the resource.
 
@@ -112,26 +113,28 @@ In this task, you use the template that you created to deploy a new managed disk
 
 1. **Save** the changes.
 
-1. Back on the **Custom deployment** blade, click **Edit parameters**. 
+1. Dpn't forget the parameters file, select **Edit parameters**, click **Load file** and upload the **parameters.json**.
 
-1. On the **Edit parameters** blade, click **Load file** and upload the **parameters.json** file you downloaded in the previous task, and **Save** the changes.
+1. Review the file and **Save** your changes. 
 
-1. Back on the **Custom deployment** blade, specify the following settings:
+1. Complete the custom deployment settings:
+
+    >**Did you know?** You can decide which parameters are required. For reference the disk resource definitions are on the [Microsoft.Compute disk page](https://learn.microsoft.com/azure/templates/microsoft.compute/disks?pivots=deployment-language-bicep#property-values).
 
     | Setting | Value |
     | --- |--- |
     | Subscription | *your subscription* |
     | Resource Group | `az104-rg3` |
-    | Region | **East US** |
+    | Region | `eastus` |
     | Disk Name | `az104-disk1` |
-    | Location | the value of the location parameter you noted in the previous task |
-    | Sku | **Standard_LRS** |
-    | Disk Size Gb | **32** |
-    | Create Option | **empty** |
-    | Disk Encryption Set Type | **EncryptionAtRestWithPlatformKey** |
-    | Data Access Auth Mode | None |
-    | Network Access Policy | **AllowAll** |
-    | Public Network Access | Disabled |
+    | Location | `None` |
+    | Sku | `Standard_LRS` |
+    | Disk Size Gb | `32` |
+    | Create Option | `Empty` |
+    | Disk Encryption Set Type | `EncryptionAtRestWithPlatformKey` |
+    | Data Access Auth Mode | `None` |
+    | Network Access Policy | `AllowAll` |
+    | Public Network Access | `Disabled` |
 
 1. Select **Review + Create** and then select **Create**.
 
@@ -141,19 +144,17 @@ In this task, you use the template that you created to deploy a new managed disk
 
 In this task, you verify that the deployment has finished successfully. All prior deployments are documented in the resource group that the deployment was targeted to. This review shows the details around the time and length of deployment, which can be helpful when troubleshooting. It is often a good practice to review the first few template-based deployments to ensure success prior to using the templates for large-scale operations.
 
-1. In the Azure portal, search for and select **Resource groups**. 
+1. In the Azure portal, search for and select **az104-rg3**.
 
-1. In the list of resource groups, click **az104-rg3**.
+1. Verify your managed disk, **az104-disk1**, was created. 
 
-1. On the **az104-rg3** resource group blade, in the **Settings** section, click **Deployments**.
+1. In the **Settings** section, click **Deployments**.
 
-1. From the **az104-rg3 - Deployments** blade, click the first entry in the list of deployments and review the content of the **Input** and **Template** blades.
+1. Select a deployment and review the content of the **Input** and **Template** blades.
 
 1. In the Azure portal, search for and select **Disks**.
 
-1. Notice your managed disk was created.
-
-    >**Note:** You can also deploy templates from the command line. Task 4 shows how to deploy using PowerShell. Task 5 shows how to deploy using the CLI.
+    >**Note:** You can also deploy templates from the command line. **Task 4** shows how to deploy using **PowerShell**. **Task 5** shows how to deploy using the **CLI**. Please try at least one of the options. Don't forget **Task 6** Bicep deployments. 
 
 
 ## Task 4. Deploy a template with Azure PowerShell (option 1).
@@ -226,7 +227,7 @@ In this task, you will use a Bicep file to deploy a storage account to your reso
 
 1. The file should be listed in the navigation tree on the left. Select it to verify its contents.
 
-   ![Screenshot of the bicep file in the cloud shell editor.](../media/az104-lab03d-editor.png)
+   ![Screenshot of the bicep file in the cloud shell editor.](../media/az104-lab03-editor.png)
 
 1. Take a minute to read through the bicep template file. Notice how the storage (stg) resource is defined. Notice how parameters and allowed values are configured.
    
@@ -250,6 +251,14 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + An Azure Resource Manager template is a JavaScript Object Notation (JSON) file that lets you manage your infrastructure declaratively rather than with scripts.
 + Rather than passing parameters as inline values in your template, you can use a separate JSON file that contains the parameter values.
 + Azure Resource Manager templates can be deployed in a variety of ways including the Azure portal, Azure PowerShell, and CLI.
++ Bicep is an alternative to Azure Resource Manager templates. Bicep uses a declarative syntax to deploy Azure resources. 
+
+Bicep provides concise syntax, reliable type safety, and support for code reuse. Bicep offers a first-class authoring experience for your infrastructure-as-code solutions in Azure.
+
+## Learn more with self-paced training
+
++ [Deploy Azure infrastructure by using JSON ARM templates](https://learn.microsoft.com/training/modules/create-azure-resource-manager-template-vs-code/). Write JSON Azure Resource Manager templates (ARM templates) by using Visual Studio Code to deploy your infrastructure to Azure consistently and reliably.
++ [Build your first Bicep template](https://learn.microsoft.com/training/modules/build-first-bicep-template/). Define Azure resources within a Bicep template. Improve the consistency and reliability of your deployments, reduce the manual effort required, and scale your deployments across environments. Your template will be flexible and reusable by using parameters, variables, expressions, and modules.
 
 ## Cleanup your resources
 

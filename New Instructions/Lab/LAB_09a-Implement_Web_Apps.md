@@ -17,7 +17,7 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 ## Lab scenario
 
-Your organization is interested in Azure Web apps for hosting your company websites. The websites are currently hosted in an on-premises data center. The websites are running on Windows servers using the PHP runtime stack. The hardware is nearing end-of-life and will soon need to be replacemed. Your organization wants to avoid replacing hardware by using Azure to host the websites. 
+Your organization is interested in Azure Web apps for hosting your company websites. The websites are currently hosted in an on-premises data center. The websites are running on Windows servers using the PHP runtime stack. The hardware is nearing end-of-life and will soon need to be replaced. Your organization wants to avoid new hardware costs by using Azure to host the websites. 
 
 ## Interactive lab simulations
 
@@ -29,7 +29,7 @@ There are interactive lab simulations that you might find useful for this topic.
 
 ## Architecture diagram
 
-![Diagram of the tasks.](../media/az104-lab09a-architecture-diagram.png)
+![Diagram of the tasks.](../media/az104-lab09a-architecture.png)
 
 ## Tasks
 
@@ -41,7 +41,7 @@ There are interactive lab simulations that you might find useful for this topic.
 
 ## Task 1: Create an Azure web app
 
-In this task, you create an Azure web app. Azure App Services is a Platform As a Service (PAAS) solution for web, mobile, and other web-based applications. Azure web apps is part Azure App Services hosting most runtime environments, such as PHP, Java, and .NET. The SKU that you select determines the amount of compute, storage, and features that you receive with the web app.
+In this task, you create an Azure web app. Azure App Services is a Platform As a Service (PAAS) solution for web, mobile, and other web-based applications. Azure web apps is part Azure App Services hosting most runtime environments, such as PHP, Java, and .NET. The app service plan that you select determines the web app compute, storage, and features. 
 
 1. Sign in to the **Azure portal** - `https://portal.azure.com`.
 
@@ -96,13 +96,13 @@ In this task, you will create a staging deployment slot. Deployment slots enable
 
 ## Task 3: Configure Web App deployment settings
 
-In this task, you will configure Web App deployment settings. Deployment settings allow for continuous deployment from your repository of choice, or by using FTPS credentials and other automation. This ensures that the app service has the latest version of the application.
+In this task, you will configure Web App deployment settings. Deployment settings allow for continuous deployment. This ensures that the app service has the latest version of the application.
 
 1. In the staging slot, select **Deployment Center** and then select **Settings**.
 
     >**Note:** Make sure you are on the staging slot blade (instead than the production slot).
     
-1.In the **Source** drop-down list, select **External Git**.
+1. In the **Source** drop-down list, select **External Git**. Notice the other choices. 
 
 1. In the repository field, enter `https://github.com/Azure-Samples/php-docs-hello-world`
 
@@ -178,6 +178,11 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + Deployment slots allow you to create separate environments for deploying and testing your web app.
 + You can manually or automatically scale a web app to handle additional demand.
 + A wide variety of diagnostics and testing tools are available. 
+
+## Learn more with self-paced training
+
++ [Stage a web app deployment for testing and rollback by using App Service deployment slots](https://learn.microsoft.com/training/modules/stage-deploy-app-service-deployment-slots/). Use deployment slots to streamline deployment and roll back a web app in Azure App Service.
++ [Scale an App Service web app to efficiently meet demand with App Service scale up and scale out](https://learn.microsoft.com/training/modules/app-service-scale-up-scale-out/). Respond to periods of increased activity by incrementally increasing the resources available and then, to reduce costs, decreasing these resources when activity drops.
 
 ## Cleanup your resources
 

@@ -28,7 +28,7 @@ There are interactive lab simulations that you might find useful for this topic.
 
 ## Architecture diagram
 
-![Diagram of the tasks.](../media/az104-lab07-architecture-diagram.png)
+![Diagram of the tasks.](../media/az104-lab07-architecture.png)
 
 ## Tasks
 
@@ -55,6 +55,8 @@ In this task, you will create and configure a storage account. The storage accou
     | Performance           | **Standard** (notice the Premium option) |
     | Redundancy            | **Geo-redundant storage** (notice the other options)|
     | Make read access to data in the event of regional availability | Check the box |
+
+>**Did you know?** You should use the Standard performance tier for most applications. Use the Premium performance tier for enterprise or high performance applications. 
 
 1. On the **Advanced** tab, review the available options, accept the defaults.
 
@@ -90,7 +92,7 @@ In this task, you will create and configure a storage account. The storage accou
 
 ## Task 2: Manage blob storage
 
-In this task, you will create a blob container and upload a blob. Blob containers are directory-like structures that store unstructured data.
+In this task, you will create a blob container and upload an image. Blob containers are directory-like structures that store unstructured data.
 
 ### Create a blob container and a time-based retention policy
 
@@ -107,7 +109,7 @@ In this task, you will create a blob container and upload a blob. Blob container
 
     ![Screenshot of create a container.](../media/az104-lab07-create-container.png)
 
-1. Select your container and in the **Settings** section, select **Access Policy**.
+1. Select your container and scroll to the ellipses on the far right, select **Access Policy**.
 
 1. In the **Immutable blob storage** area, select **Add policy**.
 
@@ -124,11 +126,12 @@ In this task, you will create a blob container and upload a blob. Blob container
 
 1. On the **Upload blob** blade, expand the **Advanced** section.
 
->**Note**: Locate a file to upload. This can be any type of file, but a small file is best. 
+    >**Note**: Locate a file to upload. This can be any type of file, but a small file is best. A sample file can be downloaded from the AllFiles directory. 
 
     | Setting | Value |
     | --- | --- |
     | Browse for files | add the file you have selected to upload |
+    | Select **Advanced** | |
     | Blob type | **Block blob** |
     | Block size | **4 MiB** |
     | Access tier | **Hot**  (notice the other options) |
@@ -149,12 +152,12 @@ In this task, you will create a blob container and upload a blob. Blob container
 
 ### Configure limited access to the blob storage
 
-1. Return to your uploaded file and select the **Generate SAS** tab. Specify the following settings (leave others with their default values):
+1. Select your uploaded file and then on the **Generate SAS** tab. You can also use the ellipses to the far right. Specify the following settings (leave others with their default values):
 
     | Setting | Value |
     | --- | --- |
     | Signing key | **Key 1** |
-    | Permissions | **Read** |
+    | Permissions | **Read** (notice your other choices) |
     | Start date | yesterday's date |
     | Start time | current time |
     | Expiry date | tomorrow's date |
@@ -163,21 +166,21 @@ In this task, you will create a blob container and upload a blob. Blob container
 
 1. Click **Generate SAS token and URL**.
 
-1. Click **Copy to clipboard** button next to the **Blob SAS URL** entry.
+1. Copy the **Blob SAS URL** entry to the clipboard.
 
-1. Open another browser window by using InPrivate mode and navigate to the URL you copied in the previous step.
+1. Open another InPrivate browser window and navigate to the Blob SAS URL you copied in the previous step.
 
-    > **Note**: You should be able to view the content of the file by downloading it and opening it with Notepad. If you receive a Windows SmartScreen error, continue to the page.
+    > **Note**: You should be able to view the content of the file. 
 
 ## Task 5: Create and configure an Azure File share
 
-In this task, you will create and configure Azure Files shares. You will use Storage Browser to manage the file share. 
+In this task, you will create and configure Azure File shares. You will use Storage Browser to manage the file share. 
 
 ### Create the file share and upload a file
 
 1. In the Azure portal, navigate back to your storage account, in the **Data storage** section, click **File shares**.
 
-1. Click **+ File share** and on the **Basics** tab give the file share a name, `share1`. Review the other settings on this tab. 
+1. Click **+ File share** and on the **Basics** tab give the file share a name, `share1`. 
 
 1. Notice the **Tier** options. Keep the default **Transaction optimized**.
    
@@ -195,8 +198,6 @@ In this task, you will create and configure Azure Files shares. You will use Sto
 
 1. Select your **share1** directory and notice you can **+ Add directory**. This lets you create a folder structure.
 
-1. **Upload** a file of your choosing.
-
 1. Select **Upload**. Browse to a file of your choice, and then click **Upload**.
 
     >**Note**: You can view file shares and manage those shares in the Storage Browser. There are currently no restrictions.
@@ -209,7 +210,7 @@ In this task, you will create and configure Azure Files shares. You will use Sto
 
 1. Take the defaults for other parameters, select **Review + create**, and then **Create**.
 
-1. Wait for the resource to deploy, and then select **Go to resource**.
+1. Wait for the virtual network to deploy, and then select **Go to resource**.
 
 1. In the **Settings** section, select the **Subnets** blade.
     + Select the **default** subnet.
@@ -243,6 +244,10 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + Azure file Storage provides shared storage for structured data. The data can be organized in folders.
 + Immutable storage provides the capability to store data in a write once, read many (WORM) state. Immutable storage policies an be time-based or legal-hold.
 
+## Learn more with self-paced training
+
++ [Optimize your cost with Azure Blob Storage](https://learn.microsoft.com/training/modules/optimize-your-cost-azure-blob-storage/). Learn how to optimize your cost with Azure Blob Storage.
++ [Control access to Azure Storage with shared access signatures](https://learn.microsoft.com/training/modules/control-access-to-azure-storage-with-sas/). Grant access to data stored in your Azure Storage accounts securely by using shared access signatures.
 
 ## Cleanup your resources
 

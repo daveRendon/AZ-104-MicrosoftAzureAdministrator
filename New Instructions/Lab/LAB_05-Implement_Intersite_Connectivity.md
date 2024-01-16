@@ -8,7 +8,7 @@ lab:
 
 ## Lab introduction
 
-In this lab you will explore communication between virtual networks. You will implement virtual network peering and run remote commands to test connections.   
+In this lab you will explore communication between virtual networks. You will implement virtual network peering and run remote commands to test connections. You will also configure a custom route. 
 
 This lab requires an Azure subscription. Your subscription type may affect the availability of features in this lab. You may change the region, but the steps are written using **East US**. 
 
@@ -16,7 +16,7 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 ## Lab scenario 
 
-Your organization segments core IT apps and services (such as DNS and security services) from other parts of the business, including your manufacturing department. However, in some scenarios, apps and services in the core area need to communicate with apps and services in the manufacturing area. In this lab, you configure connectivity between the segmented areas. This is a common scenario for separating production from development or separating one subsidiary from another.
+Your organization segments core IT apps and services (such as DNS and security services) from other parts of the business, including your manufacturing department. However, in some scenarios, apps and services in the core area need to communicate with apps and services in the manufacturing area. In this lab, you configure connectivity between the segmented areas. This is a common scenario for separating production from development or separating one subsidiary from another. Additionally, the vendor maintaining the manufacturing machines needs access through the firewall. This will require a custom route. 
 
 ## Interactive lab simulations
 
@@ -27,7 +27,7 @@ There are several interactive lab simulations that you might find useful for thi
 
 ## Architecture diagram
 
-![Lab 05 architecture diagram](../media/az104-lab05-architecture-diagram.png)
+![Lab 05 architecture diagram](../media/az104-lab05-architecture.png)
 
 ## Tasks
 
@@ -35,7 +35,8 @@ There are several interactive lab simulations that you might find useful for thi
 + Task 2: Create a manufacturing services virtual machine and virtual network.
 + Task 3: Test the connection between the virtual machines. 
 + Task 4: Create VNet peerings between the virtual networks. 
-+ Task 5: Retest the connection between the virtual machines. 
++ Task 5: Retest the connection between the virtual machines.
++ Task 6: Create a custom route to the manufacturing services virtual machines. 
  
 
 ## Task 1:  Create a core services virtual machine and virtual network
@@ -53,20 +54,20 @@ In this task, we create a core services virtual network with a virtual machine.
     | Setting | Value | 
     | --- | --- |
     | Subscription |  *your subscription* |
-    | Resource group |  `az104-rg5` (If necessary, select **Create new**. Use this group for all your lab resources.)
+    | Resource group |  `az104-rg5` (If necessary, **Create new**. )
     | Virtual machine name |    `CoreServicesVM` |
     | Region | **East US** |
     | Availability options | No infrastructure redundancy required |
-    | Image | **Windows Server 2019 Datacenter: x64 Gen2** |
+    | Image | **Windows Server 2019 Datacenter: x64 Gen2** (notice your other choices) |
     | Size | **Standard_DS2_v3** |
     | Username | `localadmin` | 
     | Password | **Provide a complex password** |
 
     ![Screenshot of Basic virtual machine creation page. ](../media/az104-lab05-createcorevm.png)
    
-1. On the Disks tab, set the OS disk type to **Standard HDD**, and then select **Next: Networking >**.
+1. On the **Disks** tab take the defaults and then select **Next: Networking >**.
 
-1. On the Networking tab, for Virtual network, select **Create new**.
+1. On the **Networking** tab, for Virtual network, select **Create new**.
 
 1. Use the following information to configure the virtual network, and then select **Ok**. If necessary, remove or replace the existing address range.
 
@@ -83,7 +84,7 @@ In this task, we create a core services virtual network with a virtual machine.
 
 1. You do not need to wait for the resources to be created. Continue on to the next task.
 
-    >**Note:** Did you notice in this task you created the virtual network when you created the virtual machine? 
+    >**Note:** Did you notice in this task you created the virtual network as you created the virtual machine?  
 
 ## Task 2: Create a manufacturing services virtual machine and virtual network
 
@@ -107,7 +108,7 @@ In this task, we create a manufacturing services virtual network with a virtual 
     | Username | `localadmin` | 
     | Password | **Provide a complex password** |
 
-1. On the Disks tab, set the OS disk type to **Standard HDD**, and then select **Next: Networking >**.
+1. On the **Disks** tab take the defaults and then select **Next: Networking >**.
 
 1. On the Networking tab, for Virtual network, select **Create new**.
 
@@ -146,9 +147,9 @@ In this task, you test the connection between the virtual machines in different 
     Test-NetConnection <CoreServicesVM private IP address> -port 3389
    ```
    
-1. It may take a couple of minutes for the script to run. The top of the page shows an informational message *Script execution in progress.*
+1. It may take a couple of minutes for the script to time out. The top of the page shows an informational message *Script execution in progress.*
    
-1. The test connection should fail. Virtual machines in different virtual networks should, by default, not be able to communicate.
+1. The test connection should fail. Virtual machines in different virtual networks should, by default, not be able to communicate. Your computer name and remote address may be different. 
    
    ![PowerShell window with Test-NetConnection failed.](../media/az104-lab05-fail.png)
 
@@ -209,8 +210,48 @@ In this task, you verify the virtual machines in different virtual networks can 
 
 1. It may take a couple of minutes for the script to run. The top of the page shows an informational icon *Script execution in progress.*
     
-1. The test connection should succeed. 
+1. The test connection should succeed. Your computer name and remote address may be different.
+   
    ![Powershell window with Test-NetConnection succeeded](../media/az104-lab05-success.png)
+
+## Task 6: Create a custom route to the manufacturing services virtual machines
+
+In this task, you have contracted with a vendor to maintain the manufacturing virtual machines. The vendor needs to be routed from an external firewall to those machines. The firewall has not been configured but you want to go ahead and configure the route.
+
+1. In the Azure portal, select **Route tables**, and then select **Create**. Provide the route table parameters.
+
+    | Setting | Value | 
+    | --- | --- |
+    | Subscription | your subscription |
+    | Resource group | `az104-rg5`  |
+    | Region | **East US** |
+    | Name | `rt-Manufacturing` |
+    | Propagate gateway routes | **No** |
+
+1. When finished select **Review + create** and then **Create**.
+
+1. After the route table deploys, select **Go to resource.**.
+
+1. Select **Routes** and then **+ Add**. Create a route from the future NVA to the Manufacturing virtual network. 
+
+    | Setting | Value | 
+    | --- | --- |
+    | Route name | `NVAtoManufacturing` |
+    | Destination type | **IP Addresses** |
+    | Destination IP addresses | `172.16.0.0/16` (manufacturing virtual network) |
+    | Next hop type | **Virtual appliance** |
+    | Next hop address | `10.2.0.4` (future NVA) |
+
+1. Select **+ Add** when the route is completed. The last thing to do is associate the route with the subnet.
+
+1. Select **Subnets** and then **Associate**. Complete the configuration.
+
+    | Setting | Value | 
+    | --- | --- |
+    | Virtual network | **ManufacturingVnet** |
+    | Subnet | **Manufacturing** |    
+
+>**Note**: You have created a user defined route to direct traffic from the NVA to a subnet. 
 
 
 ## Review the main points of the lab
@@ -221,6 +262,15 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + Virtual network peering enables you to seamlessly connect two or more virtual networks in Azure.
 + Peered virtual networks appear as one for connectivity purposes.
 + The traffic between virtual machines in peered virtual networks uses the Microsoft backbone infrastructure.
++ System defined routes are automatically created for each subnet in a virtual network.
++ User-defined routes override or add to the default system routes. For example, a user-defined route could enable Azure Virtual Appliances to handle the traffic between a subnet and the internet.
++ Route tables contain the networking map that defines the network traffic from one place to another. 
+
+
+## Learn more with self-paced training
+
++ [Distribute your services across Azure virtual networks and integrate them by using virtual network peering](https://learn.microsoft.com/en-us/training/modules/integrate-vnets-with-vnet-peering/). Use virtual network peering to enable communication across virtual networks in a way that's secure and minimally complex.
+
 
 ## Cleanup your resources
 

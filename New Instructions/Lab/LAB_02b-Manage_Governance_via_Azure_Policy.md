@@ -34,7 +34,7 @@ There are several interactive lab simulations that you might find useful for thi
 
 ## Architecture diagram
 
-![Diagram of the task architecture.](../media/az104-lab02b-architecture-diagram.png)
+![Diagram of the task architecture.](../media/az104-lab02b-architecture.png)
 
 ## Tasks
 
@@ -52,24 +52,16 @@ In this task, you will create and assign a tag to an Azure resource group via th
 
 1. From the Resource groups, select **+ Create**.
 
-1. Provide the name `az104-rg2b` and ensure that the Region is set to **East US**.
+1. Provide the name `az104-rg2` and ensure that the Region is set to **East US**.
 
-1. Select **Review + Create**, and then select **Create**.
-
-1. After the resource group is deployed, select **Go to resource group**, or navigate to the newly created resource group.
-
-1. On the resource group blade, click **Tags** in the left menu and create a new tag.
-
-1. Create a tag with the following settings.
+1. Select **Next: Tags** and create a new tag.
 
     | Setting | Value |
     | --- | --- |
-    | Name | `Role` |
-    | Value | `Infra` |
+    | Name | `Cost Center` |
+    | Value | `000` |
 
-1. Click **Apply**. You have now manually added a tag to a resource group. 
-
-    ![Screenshot of the create tag page.](../media/az104-lab02b-manualtag.png)
+1. Select **Review + Create**, and then select **Create**.
 
 ## Task 2: Enforce tagging via an Azure Policy
 
@@ -90,9 +82,9 @@ In this task, you will assign the built-in *Require a tag and its value on resou
     | Setting | Value |
     | --- | --- |
     | Subscription | *your subscription* |
-    | Resource Group | **az-rg2** |
+    | Resource Group | **az104-rg2** |
 
-    >**Note**: A scope determines the resources or resource groups where the policy assignment takes effect. You can assign policies on the management group, subscription, or resource group level. You also have the option of specifying exclusions, such as individual subscriptions, resource groups, or resources.
+    >**Note**: A scope determines the resources or resource groups where the policy assignment takes effect. You can assign policies on the management group, subscription, or resource group level. You also have the option of specifying exclusions, such as individual subscriptions, resource groups, or resources. In this scenario, we want the tag on all the resources in the resource group.
 
 1. Configure the **Basics** properties of the assignment by specifying the following settings (leave others with their defaults):
 
@@ -102,14 +94,14 @@ In this task, you will assign the built-in *Require a tag and its value on resou
     | Description | `Require Cost Center tag with default value for all resources in the resource group`|
     | Policy enforcement | Enabled |
 
-    >**Note**: The **Assignment name** is automatically populated with the policy name you selected, but you can change it. The **Description** is optional. 
+    >**Note**: The **Assignment name** is automatically populated with the policy name you selected, but you can change it. The **Description** is optional. Notice you can disable the policy at any time. 
 
 1. Click **Next** twice and set **Parameters** to the following values:
 
     | Setting | Value |
     | --- | --- |
     | Tag Name | `Cost Center` |
-    | Tag Value | `Default` |
+    | Tag Value | `000` |
 
 1. Click **Next** and review the **Remediation** tab. Leave the **Create a Managed Identity** checkbox unchecked. 
 
@@ -128,13 +120,11 @@ In this task, you will assign the built-in *Require a tag and its value on resou
     | Resource group | **az104-rg2** |
     | Storage account name | *any globally unique combination of between 3 and 24 lower case letters and digits, starting with a letter* |
 
-    >**Note**: You may receive a **Validation failed. Click here for details** error. If so, click the error message to identify the reason for the failure and skip the next step. 
-
 1. Once you create the deployment, you should see the **Deployment failed** message in the **Notifications** list of the portal. From the **Notifications** list, navigate to the deployment overview and click the **Deployment failed. Click here for details** message to identify the reason for the failure. 
 
     ![Screenshot of the disallowed policy error.](../media/az104-lab02b-policyerror.png) 
 
-    >**Note**: Verify whether the error message states that the resource deployment was disallowed by the policy. 
+    >**Note**: Verify the error message states that the resource deployment was disallowed by the policy. 
 
     >**Note**: By clicking the **Raw Error** tab, you can find more details about the error, including the name of the role definition **Require Cost Center tag with Default value**. The deployment failed because the storage account you attempted to create did not have a tag named **Cost Center** with its value set to **Default**.
 
@@ -161,15 +151,15 @@ In this task, we will use a new policy definition to remediate any non-compliant
 
     | Setting | Value |
     | --- | --- |
-    | Assignment name | `Inherit the Role tag and its Infra value from the resource group if missing` |
-    | Description | `Inherit the Role tag and its Infra value from the resource group if missing` |
+    | Assignment name | `Inherit the Role tag and its Cost Center value from the resource group if missing` |
+    | Description | `Inherit the Role tag and its Cost Center value from the resource group if missing` |
     | Policy enforcement | Enabled |
 
 1. Click **Next** twice and set **Parameters** to the following values:
 
     | Setting | Value |
     | --- | --- |
-    | Tag Name | `Role` |
+    | Tag Name | `Cost Center` |
 
 1. Click **Next** and, on the **Remediation** tab, configure the following settings (leave others with their defaults):
 
@@ -200,16 +190,22 @@ In this task, we will use a new policy definition to remediate any non-compliant
 
 1. Once the new storage account is provisioned, click **Go to resource**.
 
-1. On the **Tags** blade, note that the tag **Role** with the value **Infra** has been automatically assigned to the resource.
+1. On the **Tags** blade, note that the tag **Cost Center** with the value **000** has been automatically assigned to the resource.
+
+>**Did you know?** If you search for and select **Tags** in the portal, you can view the resources with a specific tag. 
 
 ## Key takeaways
 
 Congratulations on completing the lab. Here are the main takeaways for this lab. 
 
 + Azure tags are metadata that consists of a key-value pair. Tags describe a particular resource in your environment. In particular, tagging in Azure enables you to label your resources in a logical manne.
-+ Azure Policy establishes conventions for resources. Policy definitions describe resource compliance conditions and the effect to take if a condition is met. A condition compares a resource property field or a value to a required value. There are many built-in policy definitions.
++ Azure Policy establishes conventions for resources. Policy definitions describe resource compliance conditions and the effect to take if a condition is met. A condition compares a resource property field or a value to a required value. There are many built-in policy definitions and you can customize the policies. 
 + The Azure Policy remediation task feature is used to bring resources into compliance based on a definition and assignment. Resources that are non-compliant to a modify or deployIfNotExist definition assignment, can be brought into compliance using a remediation task.
 
+## Learn more with self-paced training
+
++ [Design an enterprise governance strategy](https://learn.microsoft.com/training/modules/enterprise-governance/). Use RBAC and Azure Policy to limit access to your Azure solutions, and determine which method is right for your security goals.
+  
 ## Cleanup your resources
 
 If you are working with your own subscription take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
