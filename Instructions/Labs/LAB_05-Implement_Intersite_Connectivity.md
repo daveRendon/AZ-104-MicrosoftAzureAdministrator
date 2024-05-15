@@ -77,7 +77,7 @@ In this task, you create a core services virtual network with a virtual machine.
 
     | Setting | Value | 
     | --- | --- |
-    | Name | `CoreServicesVNet` (Create new) |
+    | Name | `CoreServicesVnet` (Create new) |
     | Address range | `10.0.0.0/16`  |
     | Subnet Name | `Core` | 
     | Subnet address range | `10.0.0.0/24` |
@@ -122,7 +122,7 @@ In this task, you create a manufacturing services virtual network with a virtual
 
     | Setting | Value | 
     | --- | --- |
-    | Name | `ManufacturingVNet` |
+    | Name | `ManufacturingVnet` |
     | Address range | `172.16.0.0/16`  |
     | Subnet Name | `Manufacturing` |
     | Subnet address range | `172.16.0.0/24` |
@@ -177,20 +177,20 @@ In this task, you create a virtual network peering to enable communications betw
 | --------------------------------------------- | ------------------------------------- |
 | **This virtual network**                                       |                                       |
 | Peering link name                             | `CoreServicesVnet-to-ManufacturingVnet` |
-| Allow CoreServicesVNet to access the peered virtual network            | selected (default)                       |
-| Allow CoreServicesVNet to receive forwarded traffic from the peered virtual network | selected                       |
-| Allow gateway in CoreServicesVNet to forward traffic to the peered virtual network | Not selected (default) |
-| Enable CoreServicesVNet to use the peered virtual networks' remote gateway       | Not selected (default)                        |
+| Allow CoreServicesVnet to access the peered virtual network            | selected (default)                       |
+| Allow CoreServicesVnet to receive forwarded traffic from the peered virtual network | selected                       |
+| Allow gateway in CoreServicesVnet to forward traffic to the peered virtual network | Not selected (default) |
+| Enable CoreServicesVnt to use the peered virtual networks' remote gateway       | Not selected (default)                        |
 | **Remote virtual network**                                   |                                       |
 | Peering link name                             | `ManufacturingVnet-to-CoreServicesVnet` |
 | Virtual network deployment model              | **Resource manager**                      |
 | I know my resource ID                         | Not selected                          |
 | Subscription                                  | *your subscription*    |
 | Virtual network                               | **ManufacturingVnet**                     |
-| Allow ManufacturingVNet to access CoreServicesVNet  | selected (default)                       |
-| Allow ManufacturingVNet to receive forwarded traffic from CoreServicesVNet | selected                        |
-| Allow gateway in CoreServicesVNet to forward traffic to the peered virtual network | Not selected (default) |
-| Enable ManufacturingVNet to use CoreServicesVNet's remote gateway       | Not selected (default)                        |
+| Allow ManufacturingVnet to access CoreServicesVnet  | selected (default)                       |
+| Allow ManufacturingVnet to receive forwarded traffic from CoreServicesVnet | selected                        |
+| Allow gateway in CoreServicesVnet to forward traffic to the peered virtual network | Not selected (default) |
+| Enable ManufacturingVnet to use CoreServicesVnet's remote gateway       | Not selected (default)                        |
 
 1. Review your settings and select **Add**.
 
@@ -287,6 +287,18 @@ If you are working with **your own subscription** take a minute to delete the la
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
 + Using the CLI, `az group delete --name resourceGroupName`.
 
+## Extend your learning with Copilot
+Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
+
++ How can I use Azure PowerShell or Azure CLI commands to add a virtual network peering between vnet1 and vnet2?
++ Create a table highlighting various Azure and 3rd party monitoring tools supported on Azure. Highlight when to use each tool. 
++ When would I create a custom network route in Azure?
+
+## Learn more with self-paced training
+
++ [Distribute your services across Azure virtual networks and integrate them by using virtual network peering](https://learn.microsoft.com/en-us/training/modules/integrate-vnets-with-vnet-peering/). Use virtual network peering to enable communication across virtual networks in a way that's secure and minimally complex.
++ [Manage and control traffic flow in your Azure deployment with routes](https://learn.microsoft.com/training/modules/control-network-traffic-flow-with-routes/). Learn how to control Azure virtual network traffic by implementing custom routes.
+
 
 ## Key takeaways
 
@@ -298,8 +310,3 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + The traffic between virtual machines in peered virtual networks uses the Microsoft backbone infrastructure.
 + System defined routes are automatically created for each subnet in a virtual network. User-defined routes override or add to the default system routes. 
 + Azure Network Watcher provides a suite of tools to monitor, diagnose, and view metrics and logs for Azure IaaS resources.
-
-## Learn more with self-paced training
-
-+ [Distribute your services across Azure virtual networks and integrate them by using virtual network peering](https://learn.microsoft.com/en-us/training/modules/integrate-vnets-with-vnet-peering/). Use virtual network peering to enable communication across virtual networks in a way that's secure and minimally complex.
-+ [Manage and control traffic flow in your Azure deployment with routes](https://learn.microsoft.com/training/modules/control-network-traffic-flow-with-routes/). Learn how to control Azure virtual network traffic by implementing custom routes.
