@@ -107,7 +107,7 @@ In this task, you will assign the built-in *Require a tag and its value on resou
 
     >**Note**: The **Assignment name** is automatically populated with the policy name you selected, but you can change it. The **Description** is optional. Notice you can disable the policy at any time. 
 
-1. Click **Next** twice and set **Parameters** to the following values:
+1. Click **Next** and set **Parameters** to the following values:
 
     | Setting | Value |
     | --- | --- |
@@ -230,6 +230,8 @@ In this task, you configure and test a resource lock. Locks prevent either delet
 
     ![Screenshot of the failure to delete message.](../media/az104-lab02b-failuretodelete.png) 
 
+    >**Note:** You will need to remove the lock if you intend to delete the resource group. 
+    
 ## Cleanup your resources
 
 If you are working with **your own subscription** take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
@@ -253,7 +255,7 @@ Copilot can assist you in learning how to use the Azure scripting tools. Copilot
 
 Congratulations on completing the lab. Here are the main takeaways for this lab. 
 
-+ Azure tags are metadata that consists of a key-value pair. Tags describe a particular resource in your environment. In particular, tagging in Azure enables you to label your resources in a logical manne.
++ Azure tags are metadata that consists of a key-value pair. Tags describe a particular resource in your environment. In particular, tagging in Azure enables you to label your resources in a logical manner.
 + Azure Policy establishes conventions for resources. Policy definitions describe resource compliance conditions and the effect to take if a condition is met. A condition compares a resource property field or a value to a required value. There are many built-in policy definitions and you can customize the policies. 
 + The Azure Policy remediation task feature is used to bring resources into compliance based on a definition and assignment. Resources that are non-compliant to a modify or deployIfNotExist definition assignment, can be brought into compliance using a remediation task.
 + You can configure a resource lock on a subscription, resource group, or resource. The lock can protect a resource from accidental user deletions and modifications. The lock overrides any user permissions.

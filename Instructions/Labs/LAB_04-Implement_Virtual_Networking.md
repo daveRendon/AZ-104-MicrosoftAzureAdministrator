@@ -18,7 +18,7 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 Your global organization plans to implement virtual networks. The immediate goal is to accommodate all the existing resources. However, the organization is in a growth phase and wants to ensure there is additional capacity for the growth.
 
-The **CoreServicesVnet** virtual networkhas the largest number of resources. A large amount of growth is anticipated, so a large address space is necessary for this virtual network.
+The **CoreServicesVnet** virtual network has the largest number of resources. A large amount of growth is anticipated, so a large address space is necessary for this virtual network.
 
 The **ManufacturingVnet** virtual network contains systems for the operations of the manufacturing facilities. The organization is anticipating a large number of internal connected devices for their systems to retrieve data from. 
 
@@ -71,9 +71,9 @@ The organization plans a large amount of growth for core services. In this task,
 
 	|  **Option**         | **Value**            |
 	| ------------------ | -------------------- |
-	| IPv4 address space | `10.20.0.0/16` (separate the entries)    |
+	| IPv4 address space | Replace the prepopulated IPv4 address space with `10.20.0.0/16` (separate the entries)  |
 
-1. Select **+ Add a subnet**. Complete the name and address information for each subnet. Be sure to select **Add** for each new subnet. 
+1. Select **+ Add a subnet**. Complete the name and address information for each subnet. Be sure to select **Add** for each new subnet. Be sure to delete the default subnet - either before or after creating the other subnets.
 
 	| **Subnet**             | **Option**           | **Value**              |
 	| ---------------------- | -------------------- | ---------------------- |
@@ -316,16 +316,16 @@ A private DNS zone provides name resolution services within virtual networks. A 
 
 1. Notice on the **Overview** blade there are no name server records. 
 
-1. Select **+ Virtual network links** and then select **+ Add**. 
+1. Select **DNS Management** and then select **Virtual network links**. Configure the link. 
 
     | Property | Value    |
     |:---------|:---------|
     | Link name | `manufacturing-link` |
     | Virtual network | `ManufacturingVnet` |
 
-1. Select **OK** and wait for the link to create. 
+1. Select **Create** and wait for the link to create. 
 
-1. From the **Overview** blade select **+ Record set**. You would now add a record for each virtual machine that needs private name-resolution support.
+1. From the **DNS Management** blade select **+ Recordsets**. You would now add a record for each virtual machine that needs private name-resolution support.
 
     | Property | Value    |
     |:---------|:---------|

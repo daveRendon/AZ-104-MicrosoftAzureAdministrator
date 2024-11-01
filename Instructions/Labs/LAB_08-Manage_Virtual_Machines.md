@@ -49,7 +49,7 @@ In this task, you will deploy two Azure virtual machines into different availabi
 
 1. Sign in to the Azure portal - `https://portal.azure.com`.
 
-1. Search for and select `Virtual machines`, on the **Virtual machines** blade, click **+ Create**, and then select in the drop-down **+ Azure virtual machine**. Notice your other choices.
+1. Search for and select `Virtual machines`, on the **Virtual machines** blade, click **+ Create**, and then select in the drop-down **Azure virtual machine**. Notice your other choices.
 
 1. On the **Basics** tab, in the **Availability zone** drop down menu, place a checkmark next to **Zone 2**. This should select both **Zone 1** and **Zone 2**.
 
@@ -76,7 +76,7 @@ In this task, you will deploy two Azure virtual machines into different availabi
 
     ![Screenshot of the create vm page.](../media/az104-lab08-create-vm.png)
 
-1. Click **Next: Disks >** , specify the following settings (leave others with their default values):
+1. Click **Next : Disks >** , specify the following settings (leave others with their default values):
 
     | Setting | Value |
     | --- | --- |
@@ -84,7 +84,7 @@ In this task, you will deploy two Azure virtual machines into different availabi
     | Delete with VM | **checked** (default) |
     | Enable Ultra Disk compatibility | **Unchecked** |
 
-1. Click **Next: Networking >** take the defaults but do not provide a load balancer.
+1. Click **Next : Networking >** take the defaults but do not provide a load balancer.
 
     | Setting | Value |
     | --- | --- |
@@ -92,19 +92,19 @@ In this task, you will deploy two Azure virtual machines into different availabi
     | Load balancing options | **None** |
 
 
-1. Click **Next: Management >** and specify the following settings (leave others with their default values):
+1. Click **Next : Management >** and specify the following settings (leave others with their default values):
 
     | Setting | Value |
     | --- | --- |
     | Patch orchestration options | **Azure orchestrated** |  
 
-1. Click **Next: Monitoring >** and specify the following settings (leave others with their default values):
+1. Click **Next : Monitoring >** and specify the following settings (leave others with their default values):
 
     | Setting | Value |
     | --- | --- |
     | Boot diagnostics | **Disable** |
 
-1. Click **Next: Advanced >**, take the defaults, then click **Review + Create**.
+1. Click **Next : Advanced >**, take the defaults, then click **Review + Create**.
 
 1. After the validation, click **Create**.
 
@@ -194,7 +194,7 @@ In this task, you will deploy an Azure virtual machine scale set across availabi
 
     ![Screenshot of the create vmss page. ](../media/az104-lab08-create-vmss.png)
 
-1. On the **Spot** tab, accept the defaults and select **Next: Disks >**.
+1. On the **Spot** tab, accept the defaults and select **Next : Disks >**.
 
 1. On the **Disks** tab, accept the default values and click **Next : Networking >**.
 
@@ -240,20 +240,13 @@ In this task, you will deploy an Azure virtual machine scale set across availabi
     | Load balancing options | **Azure load balancer** |
     | Select a load balancer | **Create a load balancer** |
 
-1. On the **Create a load balancer** page, specify the load balancer name and take the defaults. Click **Create** when you are done then **Next : Scaling >**.
+1. On the **Create a load balancer** page, specify the load balancer name and take the defaults. Click **Create** when you are done then **Next : Management >**.
 
     | Setting | Value |
     | --- | --- |
     | Load balancer name | `vmss-lb` |
 
     >**Note:** Pause for a minute and review what you done. At this point, you have configured the virtual machine scale set with disks and networking. In the network configuration you have created a network security group and allowed HTTP. You have also created a load balancer with a public IP address.
-
-1. On the **Scaling** tab, specify the following settings (leave others with their default values) and click **Next : Management >**:
-
-    | Setting | Value |
-    | --- | --- |
-    | Initial instance count | `2` |
-    | Scaling policy | **Manual** |
 
 1. On the **Management** tab, specify the following settings (leave others with their default values):
 
@@ -277,13 +270,13 @@ In this task, you scale the virtual machine scale set using a custom scale rule.
 
 1. Select **Go to resource** or search for and select the **vmss1** scale set.
 
-1. Choose **Scaling** from the menu on the left-hand side of the scale set window.
+1. Choose **Availability + Scaling** from the left side menu, then choose **Scaling**.
 
 >**Did you know?** You can **Manual scale** or **Custom autoscale**. In scale sets with a small number of VM instances, increasing or decreasing the instance count (Manual scale) may be best. In scale sets with a large number of VM instances, scaling based on metrics (Custom autoscale) may be more appropriate.
 
 ### Scale out rule
 
-1. Select **Custom autoscale**. then change the **Scale mode** to **Scale based on metric**. And then select **Add rule**.
+1. Select **Custom autoscale**. Then change the **Scale mode** to **Scale based on metric**. And then select **Add a rule**.
 
 1. Let's create a rule that automatically increases the number of VM instances. This rule scales out when the average CPU load is greater than 70% over a 10-minute period. When the rule triggers, the number of VM instances is increased by 20%.
 
@@ -343,7 +336,7 @@ In this task, you scale the virtual machine scale set using a custom scale rule.
 
 1. Use the icon (top right) to launch a **Cloud Shell** session. Alternately, navigate directly to `https://shell.azure.com`.
 
-1. Be sure to select **PowerShell**. If necessary, use the **Show advanced settings** and configure the shell storage.
+1. Be sure to select **PowerShell**. If necessary, configure the shell storage.
 
 1. Run the following command to create a virtual machine. When prompted, provide a username and password for the VM. While you wait check out the [New-AzVM](https://learn.microsoft.com/powershell/module/az.compute/new-azvm?view=azps-11.1.0) command reference for all the parameters associated with creating a virtual machine.
 
@@ -354,7 +347,7 @@ In this task, you scale the virtual machine scale set using a custom scale rule.
     -Location 'East US' `
     -Image 'Win2019Datacenter' `
     -Zone '1' `
-    -Size 'Standard_D2s_v3' ` 
+    -Size 'Standard_D2s_v3' `
     -Credential (Get-Credential)
     ```
 
@@ -384,7 +377,7 @@ In this task, you scale the virtual machine scale set using a custom scale rule.
 
 1. Use the icon (top right) to launch a **Cloud Shell** session. Alternately, navigate directly to `https://shell.azure.com`.
 
-1. Be sure to select **Bash**. If necessary, use the **Show advanced settings** and configure the shell storage.
+1. Be sure to select **Bash**. If necessary, configure the shell storage.
 
 1. Run the following command to create a virtual machine. When prompted, provide a username and password for the VM. While you wait check out the [az vm create](https://learn.microsoft.com/cli/azure/vm?view=azure-cli-latest#az-vm-create) command reference for all the parameters associated with creating a virtual machine.
 

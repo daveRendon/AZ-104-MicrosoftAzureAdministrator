@@ -188,7 +188,8 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | Setting | Value |
     | --- | --- |
     | Name | `subnet-appgw` |
-    | Subnet address range | `10.60.3.224/27` |
+    | Starting address| `10.60.3.224` |
+    | Size | `/27` |
 
 1. Click **Save**
 
@@ -207,12 +208,10 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | Tier | **Standard V2** |
     | Enable autoscaling | **No** |
     | Minimum instance count | `2` |
-    | Availability zone | **Zone 1** |
+    | Availability zone | **1** (default) |
     | HTTP2 | **Disabled** |
     | Virtual network | **az104-06-vnet1** |
     | Subnet | **subnet-appgw (10.60.3.224/27)** |
-
-    ![Screenshot of the create app gateway page.](../media/az104-lab06-create-appgw.png)
 
 1. Click **Next: Frontends >** and specify the following settings (leave others with their default values). When complete, click **OK**.
 
@@ -221,7 +220,7 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | Frontend IP address type | **Public** |
     | Public IP address| **Add new** |
     | Name | `az104-gwpip` |
-    | Availability zone | **None** |
+    | Availability zone | **1** |
 
     >**Note:** The Application Gateway can have both a public and private IP address.
  
@@ -231,8 +230,8 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | --- | --- |
     | Name | `az104-appgwbe` |
     | Add backend pool without targets | **No** |
-    | Virtual machine | **az104-rg6-nic1 (10.60.1.4)** |
-    | Virtual machine | **az104-rg6-nic2 (10.60.2.4)** |
+    | Virtual machine | **az104-06-nic1 (10.60.1.4)** |
+    | Virtual machine | **az104-06-nic2 (10.60.2.4)** |
 
 1. Click **Add a backend pool**. This is the backend pool for **images**. Specify the following settings (leave others with their default values). When completed click **Add**.
 
@@ -240,7 +239,7 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | --- | --- |
     | Name | `az104-imagebe` |
     | Add backend pool without targets | **No** |
-    | Virtual machine | **az104-rg6-nic1 (10.60.1.4)** |
+    | Virtual machine | **az104-06-nic1 (10.60.1.4)** |
 
 1. Click **Add a backend pool**. This is the backend pool for **video**. Specify the following settings (leave others with their default values). When completed click **Add**.
 
@@ -248,7 +247,7 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | --- | --- |
     | Name | `az104-videobe` |
     | Add backend pool without targets | **No** |
-    | Virtual machine | **az104-rg6-nic2 (10.60.2.4)** |
+    | Virtual machine | **az104-06-nic2 (10.60.2.4)** |
 
 1. Select **Next : Configuration >** and then **Add a routing rule**. Complete the information.
 

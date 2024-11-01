@@ -103,7 +103,7 @@ In this task, you will create a Recovery Services vault. A Recovery Services vau
 
 1. When the deployment is completed, click **Go to Resource**.
 
-1. On the Recovery Services vault blade, in the **Settings** section, click **Properties**.
+1. In the **Settings** section, click **Properties**.
 
 1. Select the **Update** link under **Backup Configuration** label.
 
@@ -113,11 +113,9 @@ In this task, you will create a Recovery Services vault. A Recovery Services vau
     
     >**Did you know?** The [Cross Region Restore](https://learn.microsoft.com/azure/backup/backup-create-recovery-services-vault#set-cross-region-restore) option allows you to restore data in a secondary, Azure paired region. 
 
-1. Return to the Recovery Services vault blade, click the **Update** link under **Security Settings > Soft Delete and security settings** label.
+1. Select the **Update** link under **Security Settings > Soft Delete and security settings** label.
 
 1. On the **Security Settings** blade, note that **Soft Delete (For workload running in Azure)** is **Enabled**. Notice the **soft delete retention period** is **14** days. 
-
-1. Return to the Recovery Services vault blade, select the **Overview** blade.
 
 >**Did you know?** Azure has two types of vaults: Recovery Services vaults and Backup vaults. The main difference is the datasources that can be backed up. Learn more about [the differences](https://learn.microsoft.com/answers/questions/405915/what-is-difference-between-recovery-services-vault).
 
@@ -178,7 +176,7 @@ In this task, you will deploy an Azure storage account. Then you will configure 
 
 1. On the Storage accounts page, select **Create**.
 
-1. Use the following information to define the storage account, then and select **Review**.
+1. Use the following information to define the storage account, then and select **Review + create**.
 
     | Settings | Value |
     | --- | --- | 
@@ -187,13 +185,13 @@ In this task, you will deploy an Azure storage account. Then you will configure 
     | Storage account name  | Provide a globally unique name   |
     | Region                | **East US**   |
 
-1. On the Review tab, select **Create**.
+1. Select **Create**.
 
     >**Note**: Wait for the deployment to complete. It should take about a minute.
 
 1. Search and select your Recovery Services vault.
 
-1. Select **Diagnostic Settings** and then select **Add diagnostic setting**.
+1. In the **Monitoring** blade, select **Diagnostic Settings** and then select **Add diagnostic setting**.
 
 1. Name the setting `Logs and Metrics to storage`.
 

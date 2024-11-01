@@ -60,12 +60,14 @@ In this task, you create an Azure web app. Azure App Services is a Platform As a
     | Runtime stack | **PHP 8.2** |
     | Operating system | **Linux** |
     | Region | **East US** |
-    | Pricing plans | accept the defaults |
+    | Pricing plans | **Premium V3 P1V3** |
     | Zone redundancy | accept the defaults |
 
  1. Click **Review + create**, and then **Create**.
 
     >**Note**: Wait until the Web App is created before you proceed to the next task. This should take about a minute.
+    
+    >**Note**: If the deployment fails, change to another region and try again. For example, switch to **East US 2**. 
 
 1. After the deployment, select **Go to resource**.
 
@@ -79,7 +81,7 @@ In this task, you will create a staging deployment slot. Deployment slots enable
 
     >**Note**: The Web App, at this point, has a single deployment slot labeled **PRODUCTION**.
 
-1. Click **+ Add slot**, and add a new slot with the following settings:
+1. Click **Add slot**, and add a new slot with the following settings:
 
     | Setting | Value |
     | --- | ---|
@@ -124,7 +126,7 @@ In this task, you will swap the staging slot with the production slot. Swapping 
 
 1. Navigate back to the **Deployment slots** blade, and then select **Swap**.
 
-1. Review the default settings and click **Swap**.
+1. Review the default settings and click **Start Swap**.
 
 1. On the **Overview** blade of the Web App select the **Default domain** link to display the website home page.
 
@@ -159,7 +161,7 @@ In this task, you will configure autoscaling of Azure Web App. Autoscaling enabl
 
 1. From the **Overview** | **Add HTTP requests**, select **Create**.
 
-1. For the **Test URL**, paste in your **Default domain** URL. Ensure this is properly formatted and begins with **https://**.
+1. On the **Test plan** tab, click **Add request**. In the **URL field**, paste in your **Default domain** URL. Ensure this is properly formatted and begins with **https://**.
 
 1. Select **Review + create** and **Create**.
 

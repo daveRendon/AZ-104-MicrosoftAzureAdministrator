@@ -19,15 +19,8 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 Your organization is building a new lab environment for pre-production testing of apps and services.  A few engineers are being hired to manage the lab environment, including the virtual machines. To allow the engineers to authenticate by using Microsoft Entra ID, you have been tasked with provisioning users and groups. To minimize administrative overhead, membership of the groups should be updated automatically based on job titles. 
 
-## Interactive lab simulation
-
-This lab uses an interactive lab simulation. The simulation lets you to click through a similar scenario at your own pace. There are differences between the interactive simulation and this lab, but many of the core concepts are the same. An Azure subscription is not required.
-
->**Note:** This simulation is being updated. Microsoft Entra ID is the new name for Azure Active Directory (Azure AD). 
-
-+ [Manage Entra ID Identities](https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%201). Create and configure users and assign to groups. Create an Azure tenant and manage guest accounts. 
-
 ## Architecture diagram
+
 ![Diagram of the lab 01 architecture.](../media/az104-lab01-architecture.png)
 
 ## Job skills
@@ -41,6 +34,8 @@ In this task, you will create and configure user accounts. User accounts will st
 
 1. Sign in to the **Azure portal** - `https://portal.azure.com`.
 
+1. To proceed to the portal, select **Cancel** on the **Welcome to Azure** splash screen. 
+
     >**Note:** The Azure portal is used in all the labs. If you are new to the Azure, search for and select `Quickstart Center`. Take a few minutes to watch the **Getting started in the Azure portal** video. Even if you have used the portal before, you will find a few tips and tricks on navigating and customizing the interface.
     
 1. Search for and select `Microsoft Entra ID`. Microsoft Entra ID is Azure's cloud-based identity and access management solution. Take a few minutes to familiarize yourself with some of the features listed in the left pane. 
@@ -49,7 +44,9 @@ In this task, you will create and configure user accounts. User accounts will st
 
     >**Did you know?** A tenant is a specific instance of Microsoft Entra ID containing accounts and groups. Depending on your situation, you can create more tenants and **Switch** between them. 
 
-1. Return to the **Entra ID** page and select **Licenses**. From here you can purchase a license, manage the licenses you have, and assign licenses to users and groups. Select **Licensed features** to see what is available.
+1. Return to the **Entra ID** page by pressing back in the browser or selecting the option in the breadcrumb menu.
+
+1. Select **Licenses**. From here you can purchase a license, manage the licenses you have, and assign licenses to users and groups. Select **Licensed features** to see what is available.
    
 ### Create a new user
 
@@ -100,7 +97,7 @@ In this task, you will create and configure user accounts. User accounts will st
 
 In this task, you create a group account. Group accounts can include user accounts or devices. These are two basic ways members are assigned to groups: Statically and Dynamically. Static groups require administrators to add and remove members manually.  Dynamic groups update automatically based on the properties of a user account or device. For example, job title. 
 
-1. In the Azure portal, search for and select `Groups`.
+1. In the Azure portal, search for and select `Microsoft Entra ID`. In the **Manage** blade, select **Groups**. 
 
 1. Take a minute to familiarize yourself with the group settings in the left pane.
 
@@ -122,7 +119,7 @@ In this task, you create a group account. Group accounts can include user accoun
 
 1. Select **No owners selected**.
 
-1. In the **Add owners** page, search for and **select** yourself as the owner. Notice you can have more than one owner. 
+1. In the **Add owners** page, search for and **select** yourself (shown in the top right corner) as the owner. Notice you can have more than one owner. 
 
 1. Select **No members selected**.
 
@@ -136,15 +133,6 @@ In this task, you create a group account. Group accounts can include user accoun
 
 >**Note:** You may be managing a large number of groups. Does your organization have a plan for creating groups and adding members?
    
-## Cleanup your resources
-
-If you are working with **your own subscription** take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
-
-+ In the Azure portal, select the resource group, select **Delete the resource group**, **Enter resource group name**, and then click **Delete**.
-+ Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
-+ Using the CLI, `az group delete --name resourceGroupName`.
-  
-
 ## Extend your learning with Copilot
 
 Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
