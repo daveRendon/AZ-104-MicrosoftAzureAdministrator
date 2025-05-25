@@ -120,9 +120,9 @@ In this task, you will scale a virtual machine by adjusting its size to a differ
 
 1. On the **az104-vm1** virtual machine, in the **Availability + scale** blade, select **Size**.
 
-1. Set the virtual machine size to **DS1_v2** and click **Resize**. When prompted, confirm the change.
+1. Set the virtual machine size to **D2ds_v4** and click **Resize**. When prompted, confirm the change.
 
-    >**Note**: Choose another size if **Standard DS1_v2** is not available. Resizing is also known as vertical scaling, up or down.
+    >**Note**: Choose another size if **D2ds_v4** is not available. Resizing is also known as vertical scaling, up or down.
 
     ![Screenshot of the resize the virtual machine.](../media/az104-lab08-resize-vm.png)
 
@@ -183,6 +183,7 @@ In this task, you will deploy an Azure virtual machine scale set across availabi
     | Availability zone | **Zones 1, 2, 3** |
     | Orchestration mode | **Uniform** |
     | Security type | **Standard** |
+    | Scaling options | **Review and take the defaults**. We will change this in the next task. |
     | Image | **Windows Server 2019 Datacenter - x64 Gen2** |
     | Run with Azure Spot discount | **Unchecked** |
     | Size | **Standard D2s_v3** |
@@ -198,12 +199,12 @@ In this task, you will deploy an Azure virtual machine scale set across availabi
 
 1. On the **Disks** tab, accept the default values and click **Next : Networking >**.
 
-1. On the **Networking** page, click the **Create virtual network** link below the **Virtual network** textbox and create a new virtual network with the following settings (leave others with their default values).  When finished, select **OK**.
+1. On the **Networking** page, select **Edit virtual network** link. Make a few changes. When finished, select **OK**.
 
     | Setting | Value |
     | --- | --- |
     | Name | `vmss-vnet` |
-    | Address range | `10.82.0.0/20` (change what is there) |
+    | Address range | `10.82.0.0/20` (delete the existing address range) |
     | Subnet name | `subnet0` |
     | Subnet range | `10.82.0.0/24` |
 
@@ -270,15 +271,15 @@ In this task, you scale the virtual machine scale set using a custom scale rule.
 
 1. Select **Go to resource** or search for and select the **vmss1** scale set.
 
-1. Choose **Availability + Scaling** from the left side menu, then choose **Scaling**.
+1. Choose **Availability + Scale** from the left side menu, then choose **Scaling**.
 
->**Did you know?** You can **Manual scale** or **Custom autoscale**. In scale sets with a small number of VM instances, increasing or decreasing the instance count (Manual scale) may be best. In scale sets with a large number of VM instances, scaling based on metrics (Custom autoscale) may be more appropriate.
+    >**Did you know?** You can **Manual scale** or **Custom autoscale**. In scale sets with a small number of VM instances, increasing or decreasing the instance count (Manual scale) may be best. In scale sets with a large number of VM instances, scaling based on metrics (Custom autoscale) may be more appropriate.
 
-### Scale out rule
+**Scale out rule**
 
 1. Select **Custom autoscale**. Then change the **Scale mode** to **Scale based on metric**. And then select **Add a rule**.
 
-1. Let's create a rule that automatically increases the number of VM instances. This rule scales out when the average CPU load is greater than 70% over a 10-minute period. When the rule triggers, the number of VM instances is increased by 20%.
+1. Let's create a rule that automatically increases the number of VM instances. This rule scales out when the average CPU load is greater than 70% over a 10-minute period. When the rule triggers, the number of VM instances is increased by 50%.
 
     | Setting | Value |
     | --- | --- |
@@ -291,13 +292,13 @@ In this task, you scale the virtual machine scale set using a custom scale rule.
     | Time grain statistic | **Average** |
     | Operation | **Increase percent by** (review other choices) |
     | Cool down (minutes) | **5** |
-    | Percentage | **20** |
+    | Percentage | **50** |
 
     ![Screenshot of the scaling add rule page.](../media/az104-lab08-scale-rule.png)
 
 1. Be sure to **Save** your changes.
 
-### Scale in rule
+**Scale in rule**
 
 1. During evenings or weekends, demand may decrease so it is important to create a scale in rule.
 
@@ -310,11 +311,11 @@ In this task, you scale the virtual machine scale set using a custom scale rule.
     | Operator | **Less than** |
     | Threshold | **30** |
     | Operation | **decrease percentage by** (review your other choices) |
-    | Percentage | **20** |
+    | Percentage | **50** |
 
 1. Be sure to **Save** your changes.
 
-### Set the instance limits
+**Set the instance limits**
 
 1. When your autoscale rules are applied, instance limits make sure that you do not scale out beyond the maximum number of instances or scale in beyond the minimum number of instances.
 

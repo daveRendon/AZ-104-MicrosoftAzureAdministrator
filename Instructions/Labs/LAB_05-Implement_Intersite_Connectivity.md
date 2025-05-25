@@ -73,7 +73,7 @@ In this task, you create a core services virtual network with a virtual machine.
 
 1. On the **Networking** tab, for Virtual network, select **Create new**.
 
-1. Use the following information to configure the virtual network, and then select **Ok**. If necessary, remove or replace the existing information.
+1. Use the following information to configure the virtual network, and then select **OK**. If necessary, remove or replace the existing information.
 
     | Setting | Value | 
     | --- | --- |
@@ -118,7 +118,7 @@ In this task, you create a manufacturing services virtual network with a virtual
 
 1. On the Networking tab, for Virtual network, select **Create new**.
 
-1. Use the following information to configure the virtual network, and then select **Ok**.  If necessary, remove or replace the existing address range.
+1. Use the following information to configure the virtual network, and then select **OK**.  If necessary, remove or replace the existing address range.
 
     | Setting | Value | 
     | --- | --- |
@@ -169,21 +169,23 @@ In this task, you create a virtual network peering to enable communications betw
 
 1. In CoreServicesVnet, under **Settings**, select **Peerings**.
 
-1. On CoreServicesVnet | Peerings, select **+ Add**. If not specified, take the default. 
+1. On CoreServicesVnet, under Peerings, select **+ Add**. If not specified, take the default. 
 
-| **Parameter**                                    | **Value**                             |
-| --------------------------------------------- | ------------------------------------- |                                
-| Peering link name                             | `CoreServicesVnet-to-ManufacturingVnet` |
-| Virtual network    | **ManufacturingVM-net (az104-rg5)**  |
-| Allow ManufacturingVnet to access CoreServicesVnet  | selected (default)                       |
-| Allow ManufacturingVnet to receive forwarded traffic from CoreServicesVnet | selected                        |
-| Peering link name                             | `ManufacturingVnet-to-CoreServicesVnet` |
-| Allow CoreServicesVnet to access the peered virtual network            | selected (default)                       |
-| Allow CoreServicesVnet to receive forwarded traffic from the peered virtual network | selected                       |
+    | **Parameter**                                    | **Value**                             |
+    | --------------------------------------------- | ------------------------------------- |                                
+    | Peering link name                             | `CoreServicesVnet-to-ManufacturingVnet` |
+    | Virtual network    | **ManufacturingVM-net (az104-rg5)**  |
+    | Allow ManufacturingVnet to access CoreServicesVnet  | selected (default) |
+    | Allow ManufacturingVnet to receive forwarded traffic from CoreServicesVnet | selected  |
+    | Peering link name                             | `ManufacturingVnet-to-CoreServicesVnet` |
+    | Allow CoreServicesVnet to access the peered virtual network            | selected (default) |
+    | Allow CoreServicesVnet to receive forwarded traffic from the peered virtual network | selected |
 
-1. In CoreServicesVnet | Peerings, verify that the **CoreServicesVnet-to-ManufacturingVnet** peering is listed. Refresh the page to ensure the **Peering status** is **Connected**.
+4. Click **Add**.
 
-1. Switch to the **ManufacturingVnet** and verify the **ManufacturingVnet-to-CoreServicesVnet** peering is listed. Ensure the **Peering status** is **Connected**. You may need to **Refresh** the page. 
+5. In CoreServicesVnet, under Peerings, verify that the **CoreServicesVnet-to-ManufacturingVnet** peering is listed. Refresh the page to ensure the **Peering status** is **Connected**.
+
+6. Switch to the **ManufacturingVnet** and verify the **ManufacturingVnet-to-CoreServicesVnet** peering is listed. Ensure the **Peering status** is **Connected**. You may need to **Refresh** the page. 
 
 ## Task 5: Use Azure PowerShell to test the connection between virtual machines
 
@@ -221,15 +223,17 @@ In this task, you want to control network traffic between the perimeter subnet a
 
 1. Search for select the `CoreServicesVnet`.
 
-1. Select **Subnets** and then **+ Create**. Be sure to **Save** your changes. 
+1. Select **Subnets** and then **+ Subnet**. Be sure to select **Add** to save your changes. 
 
     | Setting | Value | 
     | --- | --- |
     | Name | `perimeter` |
-    | Subnet address range | `10.0.1.0/24`  |
+    | Starting address | `10.0.1.0/24`  |
 
    
-1. In the Azure portal, search for and select `Route tables`, and then select **Create**. 
+1. In the Azure portal, search for and select `Route tables`, select **+ Create**.
+
+1. Enter the following details, select **Review + Create**, and then select **Create**. 
 
     | Setting | Value | 
     | --- | --- |
@@ -239,9 +243,11 @@ In this task, you want to control network traffic between the perimeter subnet a
     | Name | `rt-CoreServices` |
     | Propagate gateway routes | **No** |
 
-1. After the route table deploys, select **Go to resource**.
+1. After the route table deploys, Search for and select the **Route Tables**.
+   
+1. Select the resource (not the checkbox) **rt-CoreServices**
 
-1. Select **Routes** and then **+ Add**. Create a route from the future NVA to the CoreServices virtual network. 
+1. Expand **Settings** then select **Routes** and then **Add**. Create a route from a future Network Virtual Appliance (NVA) to the CoreServices virtual network. 
 
     | Setting | Value | 
     | --- | --- |
@@ -251,9 +257,9 @@ In this task, you want to control network traffic between the perimeter subnet a
     | Next hop type | **Virtual appliance** (notice your other choices) |
     | Next hop address | `10.0.1.7` (future NVA) |
 
-1. Select **+ Add** when the route is completed. The last thing to do is associate the route with the subnet.
+1. Select **+ Add**. The last thing to do is associate the route with the subnet.
 
-1. Select **Subnets** and then **Associate**. Complete the configuration.
+1. Select **Subnets** and then **+ Associate**. Complete the configuration.
 
     | Setting | Value | 
     | --- | --- |

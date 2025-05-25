@@ -1,10 +1,10 @@
 ---
 lab:
-    title: 'Lab 06: Implement Traffic Management'
+    title: 'Lab 06: Implement Network Traffic Management'
     module: 'Administer Network Traffic Management'
 ---
 
-# Lab 06 - Implement Traffic Management
+# Lab 06 - Implement Network Traffic Management
 
 ## Lab introduction
 
@@ -34,7 +34,7 @@ There are interactive lab simulations that you might find useful for this topic.
 
 ## Task 1: Use a template to provision an infrastructure
 
-In this task, you will use a template to deploy one virtual network, one network security group, and two virtual machines.
+In this task, you will use a template to deploy one virtual network, one network security group, and three virtual machines.
 
 1. Download the **\\Allfiles\\Lab06** lab files (template and parameters).
 
@@ -105,7 +105,7 @@ In this task, you implement an Azure Load Balancer in front of the two Azure vir
     | Gateway Load Balancer | None |
     | Public IP address | Select **Create new** (use the instructions in the next step) |
 
-1. On the **Add a public IP address** popup, use the following settings before clicking **OK** and then **Add**. When completed click **Next: Backend pools**.
+1. On the **Add a public IP address** popup, use the following settings before clicking **Save** twice. When completed click **Next: Backend pools**.
 
     | Setting | Value |
     | --- | --- |
@@ -117,7 +117,7 @@ In this task, you implement an Azure Load Balancer in front of the two Azure vir
 
     >**Note:** The Standard SKU provides a static IP address. Static IP addresses are assigned with the resource is created and released when the resource is deleted.  
 
-1. On the **Backend pools** tab, click **Add a backend pool** with the following settings (leave others with their default values). Click **+ Add** (twice) and then click **Next: Inbound rules**.
+1. On the **Backend pools** tab, click **Add a backend pool** with the following settings (leave others with their default values). Click **Add** and then **Save**. Click **Next: Inbound rules**.
 
     | Setting | Value |
     | --- | --- |
@@ -189,9 +189,9 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | --- | --- |
     | Name | `subnet-appgw` |
     | Starting address| `10.60.3.224` |
-    | Size | `/27` |
+    | Size | `/27` - Ensure the **starting address** is still **10.60.3.224**|
 
-1. Click **Save**
+1. Click **Add**
 
     > **Note**: This subnet will be used by the Azure Application Gateway. The Application Gateway requires a dedicated subnet of /27 or larger size.
 
@@ -207,8 +207,7 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | Region | The **same** Azure region that you used in Task 1 |
     | Tier | **Standard V2** |
     | Enable autoscaling | **No** |
-    | Minimum instance count | `2` |
-    | Availability zone | **1** (default) |
+    | Instance count | `2` |
     | HTTP2 | **Disabled** |
     | Virtual network | **az104-06-vnet1** |
     | Subnet | **subnet-appgw (10.60.3.224/27)** |
@@ -290,7 +289,7 @@ In this task, you implement an Azure Application Gateway in front of two Azure v
     | Backend settings | **az104-http** |
     | Backend target | `az104-videobe` |
 
-1. Be sure to **Save** and check your changes, then select **Next : Tags >**. No changes are needed.
+1. Be sure to check your changes, then select **Next : Tags >**. No changes are needed.
 
 1. Select **Next : Review + create >** and then click **Create**.
 
@@ -326,11 +325,11 @@ If you are working with **your own subscription** take a minute to delete the la
 
 Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
 
-+ Compare and contrast the Azure Load Balancer with the Azure Application Gateway.
-+ How can I troubleshoot inbound connectivity to an Azure Load Balancer?
-+ What are the basic steps for configuring the Azure Application Gateway?
-+ Create a table highlighting Azure load balancing solutions. Include these columns: Supported protocols, Private load balancing, Global load balancing, Routing Policies, Supported environments, Connection draining, Session affinity, Host and path based load balancing, TLS offloading, Site acceleration, Security, Caching and compression.
-
++ Compare and contrast the Azure Load Balancer with the Azure Application Gateway. Help me decide in which scenarios I should use each product.
++ What tools are available to troubleshoot connections to an Azure Load Balancer? 
++ What are the basic steps for configuring the Azure Application Gateway? Provide a high-level checklist. 
++ Create a table highlighting three Azure load balancing solutions. For each solution show supported protocols, routing policies, session affinity, and TLS offloading.
+  
 ## Learn more with self-paced training
 
 + [Improve application scalability and resiliency by using Azure Load Balancer](https://learn.microsoft.com/training/modules/improve-app-scalability-resiliency-with-load-balancer/). Discuss the different load balancers in Azure and how to choose the right Azure load balancer solution to meet your requirements.
@@ -338,7 +337,7 @@ Copilot can assist you in learning how to use the Azure scripting tools. Copilot
 
 ## Key takeaways
 
-Congratulations on completing the lab. Here are the main takeaways for this lab.
+Congratulations on completing the lab. Here are the key points for this lab.
 
 + Azure Load Balancer is an excellent choice for distributing network traffic across multiple virtual machines at the transport layer (OSI layer 4 - TCP and UDP).
 + Public Load Balancers are used to load balance internet traffic to your VMs. An internal (or private) load balancer is used where private IPs are needed at the frontend only.

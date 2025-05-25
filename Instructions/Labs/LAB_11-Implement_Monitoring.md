@@ -79,7 +79,7 @@ In this task, you will deploy a virtual machine that will be used to test monito
 
 1. Select **View** in the **VM Insights** box, and then select **Configure Insights**.
 
-1. Select your virtual machine, and then **Enable** (twice).
+1. Select **Enable** next to your virtual machine, and then **Enable on the Azure Monitor - Insights Onboarding** blade.
 
 1. Take the defaults for subscription and data collection rules, then select **Configure**. 
 
@@ -93,7 +93,7 @@ In this task, you create an alert for when a virtual machine is deleted.
 
 1. Select **Create +** and select **Alert rule**. 
 
-1. Select the box for the resource group, then select **Apply**. This alert will apply to any virtual machines in the resource group. Alternatively, you could just specify one particular machine. 
+1. Select the box for the subscription, then select **Apply**. This alert will apply to any virtual machines in the subscription. Alternatively, you could just specify one particular machine. 
 
 1. Select the **Condition** tab and then select the **See all signals** link.
 
@@ -109,7 +109,7 @@ In this task, you create an alert for when a virtual machine is deleted.
 
 In this task, if the alert is triggered send an email notification to the operations team. 
 
-1. Continue working on your alert. Select **Next: Actions**, and then select **Create action group**.
+1. Continue working on your alert. Select **Use action groups** then select **Create action group** in the **Select action group** blade.
 
     >**Did you know?** You can add up to five action groups to an alert rule. Action groups are executed concurrently, in no specific order. Multiple alert rules can use the same action group. 
 
@@ -136,6 +136,8 @@ In this task, if the alert is triggered send an email notification to the operat
 
     >**Note:** You should receive an email notification saying you were added to an action group. There may be a few minutes delay, but that is a sure sign the rule has deployed.
 
+1. Select **Review + Create** and then **Create**.
+   
 1. Once the action group is created move to the **Next: Details** tab and enter the following values for each setting.
 
     | Setting | Value |
@@ -157,7 +159,7 @@ In this task, you trigger the alert and confirm a notification is sent.
 
 1. Select **Delete** from the menu bar.
 
-1. Check the box for **Apply force delete**. Enter `delete` to confirm and then select **Delete**. 
+1. Check the box for **Apply force delete**. Check the box at the bottom confirming that you want the resources to be deleted and select **Delete**. 
 
 1. In the title bar, select the **Notifications** icon and wait until **vm0** is successfully deleted.
 
@@ -179,7 +181,7 @@ In this task, you create an alert rule to suppress notifications during a mainte
 
 1. Continue in the **Alerts** blade, select **Alert processing rules** and then **+ Create**. 
    
-1. Select your **resource group**, then select **Apply**.
+1. Select your **Subscription**, then select **Apply**.
    
 1. Select **Next: Rule settings**, then select **Suppress notifications**.
    
@@ -211,19 +213,21 @@ Enter these settings for the scheduling of the alert processing rule:
 
 In this task, you will use Azure Monitor to query the data captured from the virtual machine.
 
-1. In the Azure portal, search for and select `Monitor` blade, click **Logs**.
+1. In the Azure portal, search for and select `Monitor`, then click **Logs**.
 
-1. If necessary close the splash screen. 
+1. If necessary, close the splash screen. 
 
-1. Select a scope, your **resource group**. Select **Apply**. 
+1. If necessary, select a scope, your **Subscription**. Select **Apply**. 
 
-1. In the **Queries** tab, select **Virtual machines** (left pane). 
+1. In the **Queries** tab, select **Virtual machines** (left pane). You may need to reopen the blade.
+
+    ![Screenshot of the queries tab.](../media/az104-lab11-queries.png)
 
 1. Review the queries that are available. **Run** (hover over the query) the **Count heartbeats** query.
 
 1. You should receive a heartbeat count for when the virtual machine was running.
 
-1. Review the query. This query uses the *heartbeat* table. 
+1. On the right side of the screen select the drop down next to **Simple mode**, choose **KQL mode**. Review the query. This query uses the *heartbeat* table.
 
 1. Replace the query with this one, and then click **Run**. Review the resulting chart. 
 
@@ -234,6 +238,8 @@ In this task, you will use Azure Monitor to query the data captured from the vir
     | summarize avg(Val) by bin(TimeGenerated, 5m), Computer //split up by computer
     | render timechart
    ```
+
+    >**Note:** If the query does not paste correctly, try pasting into Notepad and then copying and re-pasting into the query field.
 
 1. As you have time, review and run other queries. 
 
