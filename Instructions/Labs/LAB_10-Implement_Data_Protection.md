@@ -18,10 +18,6 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 Your organization is evaluating how to backup and restore Azure virtual machines from accidental or malicious data loss. Additionally, the organization wants to explore using Azure Site Recovery for disaster recovery scenarios. 
 
-## Interactive lab simulations
-
->**Note**: The lab simulations that were previously provided have been retired.
-
 ## Job skills
 
 + Task 1: Use a template to provision an infrastructure.
@@ -46,7 +42,7 @@ In this task, you will use a template to deploy a virtual machine. The virtual m
 
 1. Search for and select `Deploy a custom template`.
 
-1. On the custom deployment page, select **Build you own template in the editor**.
+1. On the custom deployment page, select **Build your own template in the editor**.
 
 1. On the edit template page, select **Load file**.
 
@@ -130,7 +126,7 @@ In this task, you will implement Azure virtual-machine level backup. As part of 
     | Settings | Value |
     | --- | --- |
     | Where is your workload running? | **Azure** (notice your other options) |
-    | What do you want to backup? | **Virtual machine** (notice your other options |
+    | What do you want to backup? | **Virtual machine** (notice your other options)|
 
 1. Select **Backup**.
 
@@ -269,6 +265,8 @@ If you are working with **your own subscription** take a minute to delete the la
 + In the Azure portal, select the resource group, select **Delete the resource group**, **Enter resource group name**, and then click **Delete**.
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
 + Using the CLI, `az group delete --name resourceGroupName`.
+
+   >**Note:** To delete an Azure Recovery Services vault, you must first remove all dependencies like protected items, backup servers, and storage accounts, disable security features like soft delete, and then delete the vault itself. An example [PowerShell script](https://learn.microsoft.com/azure/backup/scripts/delete-recovery-services-vault) is available. 
 
 ## Extend your learning with Copilot
 Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.

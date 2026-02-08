@@ -14,10 +14,6 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 ## Estimated timing: 50 minutes
 
-## Interactive lab simulations
-
->**Note**: The lab simulations that were previously provided have been retired.
-  
 ## Lab scenario
 
 Your team wants to look at ways to automate and simplify resource deployments. Your organization is looking for ways to reduce administrative overhead, reduce human error and increase consistency.  
@@ -67,9 +63,9 @@ In this task, we will create a managed disk in the Azure portal. Managed disks a
 
 1. Take a minute to review the **Template** and **Parameters** files.
 
-1. Click **Download** and save the templates to the local drive. This creates a compressed zipped file. 
+1. From the **Template** section, click **Download** and save the template to the local drive. Then switch to the **Parameters** section and do the same. 
 
-1. Use File Explorer to extract the content of the downloaded file into the **Downloads** folder on your computer. Notice there are two JSON files (template and parameters). 
+1. Use File Explorer to open the **Downloads** folder on your computer. Notice there are two JSON files (template and parameters). 
 
    >**Did you know?**  You can export an entire resource group or just specific resources within that resource group.
 
@@ -172,7 +168,7 @@ In this task, you work with the Azure Cloud Shell and Azure PowerShell. Azure Cl
 1. Confirm the disk was created.
 
    ```powershell
-   Get-AzDisk
+   Get-AzDisk | ft
    ```
    
 ## Task 4: Deploy a template with the CLI 
@@ -202,7 +198,7 @@ In this task, you work with the Azure Cloud Shell and Azure PowerShell. Azure Cl
 1. Confirm the disk was created.
 
      ```sh
-     az disk list --output table
+     az disk list --resource-group az104-rg3 --output table
      ```
    
 ## Task 5: Deploy a resource by using Azure Bicep
@@ -238,7 +234,7 @@ In this task, you will use a Bicep file to deploy a managed disk. Bicep is a dec
 1. Confirm the disk was created.
 
     ```sh
-    az disk list --output table
+    az disk list --resource-group az104-rg3 --output table
     ```
 
     >**Note:** You have successfully deployed five managed disks, each in a different way. Nice job!
